@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myapplication.R;
+import com.example.MealHub.R;
 import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.presenter.FavMealPresenter;
 import com.example.myapplication.inspirationmeal.Model.RandomMeals;

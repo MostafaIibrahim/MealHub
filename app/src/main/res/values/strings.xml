@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">MealHub</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="inspiration">Meal Inspiration</string>
     <string name="adjust">Adjust</string>
     <string name="fav">Favorite</string>
+    <string name="mealhub">MealHub</string>
+    <string name="meal_repo">The repository for all your meals</string>
+    <string name="name_description">3000+ easy and delicious recipes</string>
+    <string name="name_description2">from the best chefs around the world</string>
 </resources>

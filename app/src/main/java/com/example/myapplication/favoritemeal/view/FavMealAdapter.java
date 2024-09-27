@@ -1,5 +1,7 @@
 package com.example.myapplication.favoritemeal.view;
 
+
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import com.example.MealHub.R;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.myapplication.R;
 import com.example.myapplication.inspirationmeal.Model.RandomMeals;
 
 import java.util.List;

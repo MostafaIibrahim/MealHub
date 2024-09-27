@@ -1,28 +1,26 @@
-package com.example.myapplication.inspirationmeal.mainactivityview;
+package com.example.myapplication.home_screen.home_view;
 
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import com.example.myapplication.R;
-import com.example.myapplication.databinding.ActivityMainBinding;
+import com.example.MealHub.R;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
 import com.example.myapplication.inspirationmeal.view.RandomMealFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.MealHub.databinding.ActivityHomeScreenBinding;
 
+public class home_screen extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding binding;
+    ActivityHomeScreenBinding binding;
     private static final String RANDOM_MEAL_FRAGMENT = "RANDOM_MEAL_FRAGMENT";
     RandomMealFragment randomMealFragment;
     private BottomNavigationView bottomNavigationView;
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        binding=ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         replaceFragment(new RandomMealFragment());
@@ -53,5 +51,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
-
 }

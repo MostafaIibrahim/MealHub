@@ -17,11 +17,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.MealHub.R;
 import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
 import com.example.myapplication.inspirationmeal.Model.RandomMeals;
 import com.example.myapplication.inspirationmeal.Model.RandomMealsRemoteDataSource;
-import com.example.myapplication.R;
 import com.example.myapplication.inspirationmeal.presenter.RandomMealPresenter;
 
 import java.util.List;
