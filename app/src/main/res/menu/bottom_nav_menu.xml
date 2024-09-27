@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navHome"
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"
+        />
+    <item
+        android:id="@+id/navFav"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="Favorite" />
+    <item
+        android:id="@+id/navSearch"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Search" />
+    <item
+        android:id="@+id/navCalender"
+        android:icon="@drawable/baseline_calendar_today_24"
+        android:title="Calender" />
+</menu>
