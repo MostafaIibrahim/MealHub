@@ -14,6 +14,7 @@ public class MealLocalDataSource {
     private MealDAO mealOperations;
     private LiveData<List<RandomMeals>> storedMeals;
     private static MealLocalDataSource mealLocalSrc = null;
+    RandomMeals searchedMeal = null;
 
     private MealLocalDataSource(Context _context){
         context = _context;
@@ -47,5 +48,14 @@ public class MealLocalDataSource {
                 mealOperations.insertProduct(product);
             }
         }.start();
+    }
+    public RandomMeals isMealExist(String idmeal){
+        new Thread(){
+            @Override
+            public void run() {
+                searchedMeal = mealOperations.findMealById(idmeal);
+            }
+        }.start();
+        return searchedMeal;
     }
 }

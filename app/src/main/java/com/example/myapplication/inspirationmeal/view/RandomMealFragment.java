@@ -1,9 +1,11 @@
 package com.example.myapplication.inspirationmeal.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
+import com.example.myapplication.details_meal.view.DetailsMealActivity;
 import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
 import com.example.myapplication.inspirationmeal.Model.RandomMeals;
@@ -29,11 +32,10 @@ import com.example.myapplication.inspirationmeal.presenter.RandomMealPresenter;
 import java.util.List;
 
 public class RandomMealFragment extends Fragment implements IView {
-    ImageView randImg;
-    TextView nameTxt;
-    TextView categoryTxt;
-    TextView countryTxt;
-    ImageButton hrtIcon;
+    public final static String MEAL_OBJECT="Random_Meal";
+    ImageView randImg, hrtIcon;
+    TextView nameTxt, categoryTxt,countryTxt;
+    CardView card;
     boolean isFavorite = false;
     RandomMealPresenter presenter;
     List<RandomMeals> _meal;
@@ -69,6 +71,7 @@ public class RandomMealFragment extends Fragment implements IView {
         randImg = view.findViewById(R.id.rMealThumb);
         categoryTxt = view.findViewById(R.id.categoryTxt);
         countryTxt = view.findViewById(R.id.areaTxt);
+        card = view.findViewById(R.id.cardView);
 
         FragmentManager manager = getParentFragmentManager();
 
@@ -91,6 +94,15 @@ public class RandomMealFragment extends Fragment implements IView {
 
             }
         });
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
+                outIntent.putExtra(MEAL_OBJECT,_meal.get(0));
+                startActivity(outIntent);
+            }
+        });
+
 
     }
 

@@ -1,9 +1,13 @@
 package com.example.myapplication.favoritemeal.view;
 
+import static com.example.myapplication.inspirationmeal.view.RandomMealFragment.MEAL_OBJECT;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -15,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.MealHub.R;
+import com.example.myapplication.details_meal.view.DetailsMealActivity;
 import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.presenter.FavMealPresenter;
 import com.example.myapplication.inspirationmeal.Model.RandomMeals;
@@ -26,6 +31,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     RecyclerView favRcyView;
     FavMealAdapter favAdapter;
     FavMealPresenter presenter;
+    CardView card;
     public FavMealFragment() {
         // Required empty public constructor
     }
@@ -64,6 +70,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
         LiveData<List<RandomMeals>> liveData = presenter.getUpdatedData();
         liveData.observe(getViewLifecycleOwner(),observer);
 
+
     }
 
     @Override
@@ -80,5 +87,12 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     public void onDeleteClickListener(RandomMeals meal) {
         presenter.deleteRequest(meal);
 
+    }
+
+    @Override
+    public void onDetailsClickListener(RandomMeals meal) {
+        Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
+        outIntent.putExtra(MEAL_OBJECT,meal);
+        startActivity(outIntent);
     }
 }

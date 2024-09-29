@@ -15,6 +15,9 @@ public interface MealDAO {
     @Query("SELECT * FROM meals_table")
     LiveData<List<RandomMeals>> getAllProducts();
 
+    @Query("SELECT * FROM meals_table WHERE idMeal = :idMeal LIMIT 1")
+    RandomMeals findMealById(String idMeal);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertProduct(RandomMeals product);
 

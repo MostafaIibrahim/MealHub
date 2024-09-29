@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.example.MealHub.R;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -55,6 +56,11 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHold
                 listener.onDeleteClickListener(values.get(position));
             }
         });
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { listener.onDetailsClickListener(values.get(position));}
+        });
+
     }
 
     @Override
@@ -67,14 +73,16 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView thumbnail;
         public TextView name;
+        public CardView card;
         public View layout;
         public Button delete;
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            name = (TextView) layout.findViewById(R.id.favTitleTxt);
-            thumbnail = (ImageView) layout.findViewById(R.id.favThumb);
-            delete = (Button) layout.findViewById(R.id.rmvBtn);
+            name = layout.findViewById(R.id.favTitleTxt);
+            thumbnail = layout.findViewById(R.id.favThumb);
+            delete = layout.findViewById(R.id.rmvBtn);
+            card = layout.findViewById(R.id.cardView);
         }
     }
 }
