@@ -20,6 +20,7 @@ public class RandomMealPresenter implements NetworkCallBack {
     public void addMeal(RandomMeals meal){
         lSrc.insertMeal(meal);
     }
+    public void rmvMeal(RandomMeals meal) { lSrc.deleteMeal(meal);}
     public void requestData(){ rSrc.makeNetworkCall(this); }
     @Override
     public void onSuccessful(List<RandomMeals> meal) {

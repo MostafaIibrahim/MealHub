@@ -38,6 +38,7 @@ dependencies {
     val fragment_version = "1.8.3"
 
     // Java language implementation
+    implementation ("com.google.android.material:material:1.9.0")
     implementation("androidx.fragment:fragment:$fragment_version")
     implementation ("com.airbnb.android:lottie:6.5.2")
     implementation("androidx.room:room-runtime:2.6.1")
