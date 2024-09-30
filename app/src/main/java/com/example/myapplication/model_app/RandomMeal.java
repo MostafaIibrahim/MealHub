@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "meals_table")
-public class RandomMeals implements Serializable {
+public class RandomMeal implements Serializable {
     @PrimaryKey
     @NonNull
    @SerializedName("idMeal")

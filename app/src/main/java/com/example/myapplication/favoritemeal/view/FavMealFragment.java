@@ -20,9 +20,9 @@ import android.view.ViewGroup;
 
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
+import com.example.myapplication.model_app.RandomMeal;
 import com.example.myapplication.model_app.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.presenter.FavMealPresenter;
-import com.example.myapplication.model_app.RandomMeals;
 
 import java.util.List;
 
@@ -59,22 +59,22 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
         favRcyView.setLayoutManager(layoutManager);
         favAdapter = new FavMealAdapter(getContext(),this);
 
-        Observer<List<RandomMeals>> observer = new Observer<List<RandomMeals>>() {
+        Observer<List<RandomMeal>> observer = new Observer<List<RandomMeal>>() {
             @Override
-            public void onChanged(List<RandomMeals> products) {
+            public void onChanged(List<RandomMeal> products) {
                 favAdapter.setList(products);
                 favRcyView.setAdapter(favAdapter);
                 favAdapter.notifyDataSetChanged();
             }
         };
-        LiveData<List<RandomMeals>> liveData = presenter.getUpdatedData();
+        LiveData<List<RandomMeal>> liveData = presenter.getUpdatedData();
         liveData.observe(getViewLifecycleOwner(),observer);
 
 
     }
 
     @Override
-    public LiveData<List<RandomMeals>> updateList() {
+    public LiveData<List<RandomMeal>> updateList() {
         return null;
     }
 
@@ -84,15 +84,15 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     }
 
     @Override
-    public void onDeleteClickListener(RandomMeals meal) {
-        presenter.deleteRequest(meal);
+    public void onDeleteClickListener(RandomMeal randomMeal) {
+        presenter.deleteRequest(randomMeal);
 
     }
 
     @Override
-    public void onDetailsClickListener(RandomMeals meal) {
+    public void onDetailsClickListener(RandomMeal randomMeal) {
         Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-        outIntent.putExtra(MEAL_OBJECT,meal);
+        outIntent.putExtra(MEAL_OBJECT, randomMeal);
         startActivity(outIntent);
     }
 }

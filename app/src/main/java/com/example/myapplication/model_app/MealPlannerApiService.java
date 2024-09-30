@@ -5,6 +5,7 @@ import retrofit2.http.GET;
 
 public interface MealPlannerApiService{
     @GET("api/json/v1/1/random.php")
-    Call<ApiMealResponse<RandomMeals>> getRandomMealResponse();
-
+    Call<MealApiResponse<RandomMeal>> getRandomMealResponse();
+    @GET("api/json/v1/1/categories.php")
+    Call<CategoryMealApiResponse<CategoryMeal>> getCategoryMealResponse();
 }

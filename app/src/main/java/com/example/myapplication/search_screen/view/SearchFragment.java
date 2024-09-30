@@ -15,12 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.MealHub.R;
+import com.example.myapplication.model_app.CategoryMeal;
+import com.example.myapplication.model_app.CategoryMealRemoteDataSource;
+import com.example.myapplication.model_app.MealPlannerNetworkCallBack;
+
+import java.util.List;
 
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements MealPlannerNetworkCallBack<CategoryMeal> {
     SearchView searchBar;
     RecyclerView categoryRcy, countryRcy,ingredientsRcy;
     TextView seeAll;
+    CategoryMealRemoteDataSource src;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -46,7 +52,8 @@ public class SearchFragment extends Fragment {
         countryRcy = view.findViewById(R.id.searchCountriesRecylerView);
         ingredientsRcy = view.findViewById(R.id.ingredientsRecyclerView);
         seeAll = view.findViewById(R.id.seeAllIngredients);
-
+        src = CategoryMealRemoteDataSource.getInstance();
+        src.makeNetworkCall(this);
         seeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +63,16 @@ public class SearchFragment extends Fragment {
 
 
         //Now I need to handle adapter of all of these rcyc view and seeall click listener
+
+    }
+
+    @Override
+    public void onSuccessful(List<CategoryMeal> meal) {
+        Toast.makeText(getContext(), "Category is here and Retro was able to fetch the data", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailureResult(String errorMsg) {
 
     }
 }

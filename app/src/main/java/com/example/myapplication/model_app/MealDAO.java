@@ -11,14 +11,14 @@ import java.util.List;
 @Dao
 public interface MealDAO {
     @Query("SELECT * FROM meals_table")
-    LiveData<List<RandomMeals>> getAllProducts();
+    LiveData<List<RandomMeal>> getAllProducts();
 
     @Query("SELECT * FROM meals_table WHERE idMeal = :idMeal LIMIT 1")
-    RandomMeals findMealById(String idMeal);
+    RandomMeal findMealById(String idMeal);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertProduct(RandomMeals product);
+    void insertProduct(RandomMeal product);
 
     @Delete
-    void deleteProduct(RandomMeals product);
+    void deleteProduct(RandomMeal product);
 }

@@ -16,11 +16,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.presenter.DetailsPresenter;
+import com.example.myapplication.model_app.RandomMeal;
 import com.example.myapplication.model_app.MealLocalDataSource;
-import com.example.myapplication.model_app.RandomMeals;
 
 public class DetailsMealActivity extends AppCompatActivity {
-    RandomMeals objMeal;
+    RandomMeal objRandomMeal;
     ImageView mealPic;
     TextView titleTxt,categoryTxt,areaTxt,stepsTxt;
     RecyclerView rcyc_ingredients;
@@ -38,7 +38,7 @@ public class DetailsMealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_meal);
-        objMeal = (RandomMeals) getIntent().getSerializableExtra(MEAL_OBJECT);
+        objRandomMeal = (RandomMeal) getIntent().getSerializableExtra(MEAL_OBJECT);
         //Get Resource id
         mealPic = findViewById(R.id.detailedMealThumbnail);
         titleTxt = findViewById(R.id.detailedMealName);
@@ -54,7 +54,7 @@ public class DetailsMealActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.addToFav(objMeal);
+                presenter.addToFav(objRandomMeal);
                 Toast.makeText(DetailsMealActivity.this, "This meal is added to favorite", Toast.LENGTH_SHORT).show();
             }
         });
@@ -65,21 +65,21 @@ public class DetailsMealActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager =  new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         rcyc_ingredients.setLayoutManager(layoutManager);
-        adapterIngredients = new AdapterIngredients(this ,objMeal.getListIngredients(),objMeal.getListMeasures());
+        adapterIngredients = new AdapterIngredients(this , objRandomMeal.getListIngredients(), objRandomMeal.getListMeasures());
         rcyc_ingredients.setAdapter(adapterIngredients);
         adapterIngredients.notifyDataSetChanged();
     }
     void displayMealDetails(){
-        Glide.with(getApplicationContext()).load(objMeal.getStrMealThumb()).apply(new RequestOptions().override(200,200))
+        Glide.with(getApplicationContext()).load(objRandomMeal.getStrMealThumb()).apply(new RequestOptions().override(200,200))
                 .placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)
                 .into(mealPic);
-        titleTxt.setText(objMeal.getStrMeal());
-        categoryTxt.setText(objMeal.getStrCategory());
-        areaTxt.setText(objMeal.getStrArea());
-        stepsTxt.setText(objMeal.getStrInstructions());
+        titleTxt.setText(objRandomMeal.getStrMeal());
+        categoryTxt.setText(objRandomMeal.getStrCategory());
+        areaTxt.setText(objRandomMeal.getStrArea());
+        stepsTxt.setText(objRandomMeal.getStrInstructions());
         youtubeVideo.getSettings().setJavaScriptEnabled(true);
         youtubeVideo.setWebViewClient(new WebViewClient());
-        String videoUrl = objMeal.getStrYoutube();
+        String videoUrl = objRandomMeal.getStrYoutube();
         String videoId = videoUrl.substring(videoUrl.lastIndexOf('=') + 1); // Extract the video ID
         String embedUrl = "https://www.youtube.com/embed/" + videoId;
         System.out.println(embedUrl);

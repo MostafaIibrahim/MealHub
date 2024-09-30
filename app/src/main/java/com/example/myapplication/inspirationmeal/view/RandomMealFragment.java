@@ -22,8 +22,8 @@ import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
 import com.example.myapplication.model_app.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
-import com.example.myapplication.model_app.RandomMeals;
-import com.example.myapplication.model_app.RandomMealsRemoteDataSource;
+import com.example.myapplication.model_app.RandomMeal;
+import com.example.myapplication.model_app.MealRemoteDataSource;
 import com.example.myapplication.inspirationmeal.presenter.RandomMealPresenter;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class RandomMealFragment extends Fragment implements IView {
     CardView card;
     boolean isFavorite = false;
     RandomMealPresenter presenter;
-    List<RandomMeals> _meal;
+    List<RandomMeal> _Random_meal;
     FavMealFragment favMealFragment;
 
     public RandomMealFragment() {
@@ -55,7 +55,7 @@ public class RandomMealFragment extends Fragment implements IView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_random_meal, container, false);
-        presenter = new RandomMealPresenter(this, RandomMealsRemoteDataSource.getInstance(), MealLocalDataSource.getInstance(requireContext()));
+        presenter = new RandomMealPresenter(this, MealRemoteDataSource.getInstance(), MealLocalDataSource.getInstance(requireContext()));
 
         return view;
     }
@@ -80,12 +80,12 @@ public class RandomMealFragment extends Fragment implements IView {
                 isFavorite = !isFavorite;
                 if (isFavorite){
                     hrtIcon.setImageResource(R.drawable.baseline_bookmark_added_24);
-                    presenter.addMeal(_meal.get(0));
+                    presenter.addMeal(_Random_meal.get(0));
                     Toast.makeText(getContext(), "The meal is added to favorite", Toast.LENGTH_SHORT).show();
 //                    hrtIcon.setColorFilter(getResources().getColor(com.google.android.material.R.color.error_color_material_light));
                 }else{
                     hrtIcon.setImageResource(R.drawable.baseline_bookmark_border_24);
-                    presenter.rmvMeal(_meal.get(0));
+                    presenter.rmvMeal(_Random_meal.get(0));
                     Toast.makeText(getContext(), "The meal is removed from favorite", Toast.LENGTH_SHORT).show();
                 }
 
@@ -95,7 +95,7 @@ public class RandomMealFragment extends Fragment implements IView {
             @Override
             public void onClick(View view) {
                 Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-                outIntent.putExtra(MEAL_OBJECT,_meal.get(0));
+                outIntent.putExtra(MEAL_OBJECT, _Random_meal.get(0));
                 startActivity(outIntent);
             }
         });
@@ -115,14 +115,14 @@ public class RandomMealFragment extends Fragment implements IView {
     }
 
     @Override
-    public void getRandomMeal(List<RandomMeals> meal) {
-        if (meal != null && isAdded()) {
-            _meal = meal;
-            nameTxt.setText(meal.get(0).getStrMeal());
-            categoryTxt.setText(meal.get(0).getStrCategory());
-            countryTxt.setText(meal.get(0).getStrArea());
+    public void getRandomMeal(List<RandomMeal> randomMeal) {
+        if (randomMeal != null && isAdded()) {
+            _Random_meal = randomMeal;
+            nameTxt.setText(randomMeal.get(0).getStrMeal());
+            categoryTxt.setText(randomMeal.get(0).getStrCategory());
+            countryTxt.setText(randomMeal.get(0).getStrArea());
             Glide.with(getContext())
-                    .load(meal.get(0).getStrMealThumb())
+                    .load(randomMeal.get(0).getStrMealThumb())
                     .apply(new RequestOptions().override(381, 230))
                     .placeholder(R.drawable.ic_launcher_background)
                     .error(R.drawable.ic_launcher_foreground)

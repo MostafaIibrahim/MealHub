@@ -10,9 +10,9 @@ import java.util.List;
 public class MealLocalDataSource {
     private Context context;
     private MealDAO mealOperations;
-    private LiveData<List<RandomMeals>> storedMeals;
+    private LiveData<List<RandomMeal>> storedMeals;
     private static MealLocalDataSource mealLocalSrc = null;
-    RandomMeals searchedMeal = null;
+    RandomMeal searchedRandomMeal = null;
 
     private MealLocalDataSource(Context _context){
         context = _context;
@@ -26,11 +26,11 @@ public class MealLocalDataSource {
         }
         return mealLocalSrc;
     }
-    public LiveData<List<RandomMeals>> getStoredMeals() {
+    public LiveData<List<RandomMeal>> getStoredMeals() {
         return storedMeals;
     }
 
-    public void deleteMeal(RandomMeals product) {
+    public void deleteMeal(RandomMeal product) {
         new Thread() {
             @Override
             public void run() {
@@ -39,7 +39,7 @@ public class MealLocalDataSource {
         }.start();
     }
 
-    public void insertMeal(RandomMeals product) {
+    public void insertMeal(RandomMeal product) {
         new Thread() {
             @Override
             public void run() {
@@ -47,13 +47,13 @@ public class MealLocalDataSource {
             }
         }.start();
     }
-    public RandomMeals isMealExist(String idmeal){
+    public RandomMeal isMealExist(String idmeal){
         new Thread(){
             @Override
             public void run() {
-                searchedMeal = mealOperations.findMealById(idmeal);
+                searchedRandomMeal = mealOperations.findMealById(idmeal);
             }
         }.start();
-        return searchedMeal;
+        return searchedRandomMeal;
     }
 }
