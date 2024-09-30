@@ -15,4 +15,5 @@
     <string name="Inspirational">Daily Inspiration</string>
     <string name="categories">Categories</string>
     <string name="seeall">See all</string>
+    <string name="filter">Filter By:</string>
 </resources>

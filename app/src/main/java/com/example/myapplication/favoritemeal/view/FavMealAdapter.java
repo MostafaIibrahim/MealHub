@@ -47,6 +47,7 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull FavMealAdapter.ViewHolder holder, int position) {
         holder.name.setText(values.get(position).getStrMeal());
+        holder.description.setText(values.get(position).getStrArea());
         Glide.with(context).load(values.get(position).getStrMealThumb()).apply(new RequestOptions().override(200,200))
                 .placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)
                 .into(holder.thumbnail);
@@ -72,17 +73,18 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView thumbnail;
-        public TextView name;
+        public TextView name, description;
         public CardView card;
         public View layout;
         public Button delete;
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
+            description = layout.findViewById(R.id.favDescriptionTxt);
             name = layout.findViewById(R.id.favTitleTxt);
             thumbnail = layout.findViewById(R.id.favThumb);
             delete = layout.findViewById(R.id.rmvBtn);
-            card = layout.findViewById(R.id.cardView);
+            card = layout.findViewById(R.id.cardFavView);
         }
     }
 }

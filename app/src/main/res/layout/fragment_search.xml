@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context="com.example.myapplication.search_screen.view.SearchFragment">
@@ -29,15 +29,67 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="320dp"
-                android:layout_height="41dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/searchview_background"
-                android:iconifiedByDefault="false"
-                android:queryHint="Search for ingredients, countries, or categories" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="320dp"
+                    android:layout_height="41dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/searchview_background"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="Search for ingredients, countries, or categories" >
+
+                </SearchView>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/filter"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/filterRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Name" />
+
+                        <RadioButton
+                            android:id="@+id/radioCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category" />
+
+                        <RadioButton
+                            android:id="@+id/radioIngredient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ingredient" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/filterByLabel"
