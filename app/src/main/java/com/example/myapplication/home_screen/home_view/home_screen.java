@@ -13,6 +13,7 @@ import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
 import com.example.myapplication.inspirationmeal.view.RandomMealFragment;
+import com.example.myapplication.search_screen.view.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.MealHub.databinding.ActivityHomeScreenBinding;
 
@@ -28,7 +29,6 @@ public class home_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityHomeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Intent Inten = new Intent(home_screen.this, DetailsMealActivity.class);
         replaceFragment(new RandomMealFragment());
         binding.bottomNavView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navHome)
@@ -36,9 +36,7 @@ public class home_screen extends AppCompatActivity {
             else if (item.getItemId() == R.id.navFav)
                 replaceFragment(new FavMealFragment());
             else if (item.getItemId() == R.id.navSearch)
-                startActivity(Inten);
-//                replaceFragment(new DetailsMealFragment());
-
+                replaceFragment(new SearchFragment());
             /*else if (item.getItemId() == R.id.navCalender)
                 replaceFragment(new CalenderFragment());*/
             return true;

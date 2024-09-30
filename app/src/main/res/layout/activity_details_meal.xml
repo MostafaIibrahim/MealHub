@@ -7,7 +7,6 @@
     android:background="@android:color/white"
     tools:context="com.example.myapplication.details_meal.view.DetailsMealActivity">
 
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +19,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Meal Thumbnail with Rounded Corners -->
             <ImageView
                 android:id="@+id/detailedMealThumbnail"
                 android:layout_width="match_parent"
@@ -30,7 +28,6 @@
                 android:background="@drawable/rounded_image_background"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Meal Title with Custom Style -->
             <TextView
                 android:id="@+id/detailedMealName"
                 android:layout_width="wrap_content"
@@ -44,7 +41,6 @@
                 tools:text="Meal Title"
                 android:fontFamily="@font/poppins_bold"/>
 
-            <!-- Category and Area Text with Padding -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +85,6 @@
                     tools:text="Area" />
             </LinearLayout>
 
-            <!-- Ingredients Section with CardView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +111,6 @@
                     tools:listitem="@layout/item_ingredient" />
             </androidx.cardview.widget.CardView>
 
-            <!-- Preparation Steps -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +130,6 @@
                 android:paddingRight="10dp"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Watch How to Make It Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +141,6 @@
                 android:textColor="@android:color/black"
                 android:fontFamily="@font/poppins_medium"/>
 
-            <!-- YouTube Video -->
             <WebView
                 android:id="@+id/youtubeVideo"
                 android:layout_width="match_parent"
@@ -160,7 +152,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Buttons with Custom Styles -->
+
     <LinearLayout
         android:id="@+id/bottomLayout"
         android:layout_width="match_parent"

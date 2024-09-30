@@ -10,9 +10,8 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Ingredient Image -->
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/categoryThumbnail"
+        android:id="@+id/ingredientThumbnail"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="4dp"
@@ -20,9 +19,8 @@
         android:background="@drawable/rounded_corners"
         android:src="@drawable/ic_launcher_background" />
 
-    <!-- Ingredient Name -->
     <TextView
-        android:id="@+id/categoryLabel"
+        android:id="@+id/ingredientLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -30,18 +28,6 @@
         android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        tools:text="Ingredient" />
-
-    <!-- Ingredient Measurement -->
-    <TextView
-        android:id="@+id/ingredientMeasurement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="12sp"
-        tools:text="100g" />
+        tools:text="Search" />
 
 </LinearLayout>

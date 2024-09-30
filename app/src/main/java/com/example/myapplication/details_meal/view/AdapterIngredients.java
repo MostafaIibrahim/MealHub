@@ -4,9 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
 
 import java.util.List;
 
@@ -63,9 +60,9 @@ public class AdapterIngredients extends RecyclerView.Adapter<AdapterIngredients.
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            name = layout.findViewById(R.id.ingredientLabel);
+            name = layout.findViewById(R.id.categoryLabel);
             measure = layout.findViewById(R.id.ingredientMeasurement);
-            thumbnail = layout.findViewById(R.id.ingredientThumbnail);
+            thumbnail = layout.findViewById(R.id.categoryThumbnail);
         }
 
     }
