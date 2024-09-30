@@ -1,10 +1,10 @@
 package com.example.myapplication.model_app;
 
 public class CategoryMeal {
-    public String idCategory;
-    public String strCategory;
-    public String strCategoryThumb;
-    public String strCategoryDescription;
+    private String idCategory;
+    private String strCategory;
+    private String strCategoryThumb;
+    private String strCategoryDescription;
 
     public CategoryMeal(String idCategory, String strCategory, String strCategoryThumb, String strCategoryDescription) {
         this.idCategory = idCategory;

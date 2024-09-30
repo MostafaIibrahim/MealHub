@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_ingredient"
+    android:id="@+id/item_category"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
@@ -11,16 +11,16 @@
     android:padding="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/categoryThumbnail"
+        android:id="@+id/listCategoryThumbnail"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginBottom="4dp"
+        android:shape="oval"
         android:scaleType="centerCrop"
-        android:background="@drawable/rounded_corners"
         android:src="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/categoryLabel"
+        android:id="@+id/listCategoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"

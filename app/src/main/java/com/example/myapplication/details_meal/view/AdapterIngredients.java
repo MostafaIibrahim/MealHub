@@ -60,9 +60,9 @@ public class AdapterIngredients extends RecyclerView.Adapter<AdapterIngredients.
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            name = layout.findViewById(R.id.categoryLabel);
+            name = layout.findViewById(R.id.listCategoryLabel);
             measure = layout.findViewById(R.id.ingredientMeasurement);
-            thumbnail = layout.findViewById(R.id.categoryThumbnail);
+            thumbnail = layout.findViewById(R.id.listCategoryThumbnail);
         }
 
     }

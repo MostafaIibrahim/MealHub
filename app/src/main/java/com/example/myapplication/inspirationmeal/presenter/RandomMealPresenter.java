@@ -23,8 +23,8 @@ public class RandomMealPresenter implements MealPlannerNetworkCallBack<RandomMea
     public void rmvMeal(RandomMeal randomMeal) { lSrc.deleteMeal(randomMeal);}
     public void requestData(){ rSrc.makeNetworkCall(this); }
     @Override
-    public void onSuccessful(List<RandomMeal> randomMeal) {
-        view.getRandomMeal(randomMeal);
+    public void onSuccessful(List<RandomMeal> meals) {
+        view.getRandomMeal(meals);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,16 +18,20 @@ import android.widget.Toast;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.CategoryMeal;
 import com.example.myapplication.model_app.CategoryMealRemoteDataSource;
-import com.example.myapplication.model_app.MealPlannerNetworkCallBack;
+import com.example.myapplication.search_screen.category_meal.presenter_category.CategoryPresenter;
+import com.example.myapplication.search_screen.category_meal.view_category.CategoryAdapter;
+import com.example.myapplication.search_screen.category_meal.view_category.IViewCategory;
 
 import java.util.List;
 
 
-public class SearchFragment extends Fragment implements MealPlannerNetworkCallBack<CategoryMeal> {
+public class SearchFragment extends Fragment implements IViewCategory {
     SearchView searchBar;
     RecyclerView categoryRcy, countryRcy,ingredientsRcy;
     TextView seeAll;
-    CategoryMealRemoteDataSource src;
+    CategoryPresenter presenter;
+    RecyclerView getCategoryRcy;
+    CategoryAdapter categoryAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -51,9 +56,11 @@ public class SearchFragment extends Fragment implements MealPlannerNetworkCallBa
         categoryRcy = view.findViewById(R.id.searchCategoryRecylerView);
         countryRcy = view.findViewById(R.id.searchCountriesRecylerView);
         ingredientsRcy = view.findViewById(R.id.ingredientsRecyclerView);
+        getCategoryRcy = view.findViewById(R.id.searchCategoryRecylerView);
         seeAll = view.findViewById(R.id.seeAllIngredients);
-        src = CategoryMealRemoteDataSource.getInstance();
-        src.makeNetworkCall(this);
+        presenter = new CategoryPresenter(this,CategoryMealRemoteDataSource.getInstance()) ;
+        presenter.requestData();
+        categoryAttachToAdapter();
         seeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,14 +72,25 @@ public class SearchFragment extends Fragment implements MealPlannerNetworkCallBa
         //Now I need to handle adapter of all of these rcyc view and seeall click listener
 
     }
+    void categoryAttachToAdapter(){
+        getCategoryRcy.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        getCategoryRcy.setLayoutManager(layoutManager);
+        categoryAdapter = new CategoryAdapter(getContext());
+    }
+
 
     @Override
-    public void onSuccessful(List<CategoryMeal> meal) {
-        Toast.makeText(getContext(), "Category is here and Retro was able to fetch the data", Toast.LENGTH_SHORT).show();
+    public void getCategoryMeals(List<CategoryMeal> categoryMeals) {
+//        Toast.makeText(getContext(), "Category data is here and presenter successed", Toast.LENGTH_SHORT).show();
+        getCategoryRcy.setAdapter(categoryAdapter);
+        categoryAdapter.updateMeals(categoryMeals);
+        categoryAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onFailureResult(String errorMsg) {
-
+    public void showError(String errorMsg) {
+        Toast.makeText(getContext(),errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
