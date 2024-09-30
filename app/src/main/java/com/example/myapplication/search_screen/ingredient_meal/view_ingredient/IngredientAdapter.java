@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
-import com.example.myapplication.model_app.CategoryMeal;
 import com.example.myapplication.model_app.IngredientMeal;
-import com.example.myapplication.search_screen.category_meal.view_category.CategoryAdapter;
 
 import java.util.List;
 
@@ -74,7 +72,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
-            linearLayout = layout.findViewById(R.id.item_ingredient);
+            linearLayout = layout.findViewById(R.id.item_area);
             name = layout.findViewById(R.id.ingredientLabel);
             thumbnail = layout.findViewById(R.id.ingredientThumbnail);
         }

@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Filter by"
+                android:text="List by"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -93,15 +93,6 @@
                     android:text="Ingredients"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
-                <TextView
-                    android:id="@+id/seeAllIngredients"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="See All"
-                    android:textColor="?attr/colorPrimary"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

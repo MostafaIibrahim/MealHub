@@ -18,11 +18,16 @@ import android.widget.Toast;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.CategoryMeal;
 import com.example.myapplication.model_app.CategoryMealRemoteDataSource;
+import com.example.myapplication.model_app.CountryMeal;
+import com.example.myapplication.model_app.CountryMealRemoteDataSource;
 import com.example.myapplication.model_app.IngredientMeal;
 import com.example.myapplication.model_app.IngredientMealRemoteDataSource;
 import com.example.myapplication.search_screen.category_meal.presenter_category.CategoryPresenter;
 import com.example.myapplication.search_screen.category_meal.view_category.CategoryAdapter;
 import com.example.myapplication.search_screen.category_meal.view_category.IViewCategory;
+import com.example.myapplication.search_screen.country_meal.presenter_country.CountryPresenter;
+import com.example.myapplication.search_screen.country_meal.view_country.CountryAdapter;
+import com.example.myapplication.search_screen.country_meal.view_country.IViewCountry;
 import com.example.myapplication.search_screen.ingredient_meal.presenter_ingredient.IngredientPresenter;
 import com.example.myapplication.search_screen.ingredient_meal.view_ingredient.IViewIngredients;
 import com.example.myapplication.search_screen.ingredient_meal.view_ingredient.IngredientAdapter;
@@ -30,14 +35,15 @@ import com.example.myapplication.search_screen.ingredient_meal.view_ingredient.I
 import java.util.List;
 
 
-public class SearchFragment extends Fragment implements IViewCategory, IViewIngredients {
+public class SearchFragment extends Fragment implements IViewCategory, IViewIngredients , IViewCountry {
     SearchView searchBar;
-    RecyclerView categoryRcy, countryRcy,ingredientsRcy;
-    TextView seeAll;
+    RecyclerView  countryRcy,ingredientsRcy,getCategoryRcy;
 
     CategoryPresenter categoryPresenter;
     IngredientPresenter ingredientPresenter;
-    RecyclerView getCategoryRcy;
+    CountryPresenter countryPresenter;
+
+    CountryAdapter countryAdapter;
     CategoryAdapter categoryAdapter;
     IngredientAdapter ingredientAdapter;
     public SearchFragment() {
@@ -67,22 +73,26 @@ public class SearchFragment extends Fragment implements IViewCategory, IViewIngr
 
         ingredientPresenter = new IngredientPresenter(this, IngredientMealRemoteDataSource.getInstance());
         categoryPresenter = new CategoryPresenter(this,CategoryMealRemoteDataSource.getInstance()) ;
+        countryPresenter = new CountryPresenter(this, CountryMealRemoteDataSource.getInstance());
 
+        countryPresenter.requestData();
         ingredientPresenter.requestData();
         categoryPresenter.requestData();
+
+        countryAttachToAdapter();
         categoryAttachToAdapter();
         ingredientAttachToAdapter();
-//        seeAll.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getContext(), "I am see all", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
-
-        //Now I need to handle adapter of all of these rcyc view and seeall click listener
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
+
     void categoryAttachToAdapter(){
         getCategoryRcy.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -96,6 +106,14 @@ public class SearchFragment extends Fragment implements IViewCategory, IViewIngr
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         ingredientsRcy.setLayoutManager(layoutManager);
         ingredientAdapter = new IngredientAdapter(getContext());
+    }
+
+    void countryAttachToAdapter(){
+        countryRcy.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        countryRcy.setLayoutManager(layoutManager);
+        countryAdapter = new CountryAdapter(getContext(),countryPresenter);
     }
 
 
@@ -112,6 +130,13 @@ public class SearchFragment extends Fragment implements IViewCategory, IViewIngr
         ingredientsRcy.setAdapter(ingredientAdapter);
         ingredientAdapter.updateMeals(ingredients);
         ingredientAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getCountries(List<CountryMeal> country) {
+        countryRcy.setAdapter(countryAdapter);
+        countryAdapter.setCountries(country);
+        countryAdapter.notifyDataSetChanged();
     }
 
     @Override
