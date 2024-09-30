@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.CategoryMeal;
 
@@ -67,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            linearLayout = layout.findViewById(R.id.item_category);
+            linearLayout = layout.findViewById(R.id.item_ingredient);
             name = layout.findViewById(R.id.listCategoryLabel);
             thumbnail = layout.findViewById(R.id.listCategoryThumbnail);
         }

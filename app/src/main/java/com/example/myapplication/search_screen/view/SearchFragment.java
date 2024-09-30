@@ -18,20 +18,28 @@ import android.widget.Toast;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.CategoryMeal;
 import com.example.myapplication.model_app.CategoryMealRemoteDataSource;
+import com.example.myapplication.model_app.IngredientMeal;
+import com.example.myapplication.model_app.IngredientMealRemoteDataSource;
 import com.example.myapplication.search_screen.category_meal.presenter_category.CategoryPresenter;
 import com.example.myapplication.search_screen.category_meal.view_category.CategoryAdapter;
 import com.example.myapplication.search_screen.category_meal.view_category.IViewCategory;
+import com.example.myapplication.search_screen.ingredient_meal.presenter_ingredient.IngredientPresenter;
+import com.example.myapplication.search_screen.ingredient_meal.view_ingredient.IViewIngredients;
+import com.example.myapplication.search_screen.ingredient_meal.view_ingredient.IngredientAdapter;
 
 import java.util.List;
 
 
-public class SearchFragment extends Fragment implements IViewCategory {
+public class SearchFragment extends Fragment implements IViewCategory, IViewIngredients {
     SearchView searchBar;
     RecyclerView categoryRcy, countryRcy,ingredientsRcy;
     TextView seeAll;
-    CategoryPresenter presenter;
+
+    CategoryPresenter categoryPresenter;
+    IngredientPresenter ingredientPresenter;
     RecyclerView getCategoryRcy;
     CategoryAdapter categoryAdapter;
+    IngredientAdapter ingredientAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -53,20 +61,23 @@ public class SearchFragment extends Fragment implements IViewCategory {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchBar = view.findViewById(R.id.searchView);
-        categoryRcy = view.findViewById(R.id.searchCategoryRecylerView);
         countryRcy = view.findViewById(R.id.searchCountriesRecylerView);
         ingredientsRcy = view.findViewById(R.id.ingredientsRecyclerView);
         getCategoryRcy = view.findViewById(R.id.searchCategoryRecylerView);
-        seeAll = view.findViewById(R.id.seeAllIngredients);
-        presenter = new CategoryPresenter(this,CategoryMealRemoteDataSource.getInstance()) ;
-        presenter.requestData();
+
+        ingredientPresenter = new IngredientPresenter(this, IngredientMealRemoteDataSource.getInstance());
+        categoryPresenter = new CategoryPresenter(this,CategoryMealRemoteDataSource.getInstance()) ;
+
+        ingredientPresenter.requestData();
+        categoryPresenter.requestData();
         categoryAttachToAdapter();
-        seeAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "I am see all", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ingredientAttachToAdapter();
+//        seeAll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getContext(), "I am see all", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         //Now I need to handle adapter of all of these rcyc view and seeall click listener
@@ -79,6 +90,13 @@ public class SearchFragment extends Fragment implements IViewCategory {
         getCategoryRcy.setLayoutManager(layoutManager);
         categoryAdapter = new CategoryAdapter(getContext());
     }
+    void ingredientAttachToAdapter(){
+        ingredientsRcy.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 8);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        ingredientsRcy.setLayoutManager(layoutManager);
+        ingredientAdapter = new IngredientAdapter(getContext());
+    }
 
 
     @Override
@@ -87,6 +105,13 @@ public class SearchFragment extends Fragment implements IViewCategory {
         getCategoryRcy.setAdapter(categoryAdapter);
         categoryAdapter.updateMeals(categoryMeals);
         categoryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getIngredients(List<IngredientMeal> ingredients) {
+        ingredientsRcy.setAdapter(ingredientAdapter);
+        ingredientAdapter.updateMeals(ingredients);
+        ingredientAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -9,4 +9,8 @@ public interface MealPlannerApiService{
 
     @GET("api/json/v1/1/categories.php")
     Call<CategoryMealApiResponse<CategoryMeal>> getCategoryMealResponse();
+
+    @GET("api/json/v1/1/list.php?i=list")
+    Call<MealApiResponse<IngredientMeal>> getIngredientMealResponse();
+
 }
