@@ -1,8 +1,7 @@
-package com.example.myapplication.inspirationmeal.Model;
+package com.example.myapplication.model_app;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;

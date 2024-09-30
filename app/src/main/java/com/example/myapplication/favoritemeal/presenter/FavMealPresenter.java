@@ -2,9 +2,9 @@ package com.example.myapplication.favoritemeal.presenter;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
+import com.example.myapplication.model_app.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.view.IFragmentView;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
+import com.example.myapplication.model_app.RandomMeals;
 
 import java.util.List;
 

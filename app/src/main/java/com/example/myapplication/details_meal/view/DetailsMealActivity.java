@@ -16,10 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.presenter.DetailsPresenter;
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
-
-import java.util.List;
+import com.example.myapplication.model_app.MealLocalDataSource;
+import com.example.myapplication.model_app.RandomMeals;
 
 public class DetailsMealActivity extends AppCompatActivity {
     RandomMeals objMeal;

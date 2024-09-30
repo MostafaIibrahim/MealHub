@@ -1,8 +1,7 @@
 package com.example.myapplication.details_meal.presenter;
 
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
-import com.example.myapplication.favoritemeal.view.IFragmentView;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
+import com.example.myapplication.model_app.MealLocalDataSource;
+import com.example.myapplication.model_app.RandomMeals;
 
 public class DetailsPresenter {
     MealLocalDataSource mealLocalDataSource;

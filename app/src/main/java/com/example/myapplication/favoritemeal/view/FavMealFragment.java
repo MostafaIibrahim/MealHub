@@ -20,9 +20,9 @@ import android.view.ViewGroup;
 
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
+import com.example.myapplication.model_app.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.presenter.FavMealPresenter;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
+import com.example.myapplication.model_app.RandomMeals;
 
 import java.util.List;
 

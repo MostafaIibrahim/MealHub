@@ -1,14 +1,14 @@
 package com.example.myapplication.inspirationmeal.presenter;
 
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
-import com.example.myapplication.inspirationmeal.Model.NetworkCallBack;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
-import com.example.myapplication.inspirationmeal.Model.RandomMealsRemoteDataSource;
+import com.example.myapplication.model_app.MealLocalDataSource;
+import com.example.myapplication.model_app.MealPlannerNetworkCallBack;
+import com.example.myapplication.model_app.RandomMeals;
+import com.example.myapplication.model_app.RandomMealsRemoteDataSource;
 import com.example.myapplication.inspirationmeal.view.IView;
 
 import java.util.List;
 
-public class RandomMealPresenter implements NetworkCallBack {
+public class RandomMealPresenter implements MealPlannerNetworkCallBack<RandomMeals> {
     IView view;
     RandomMealsRemoteDataSource rSrc;
     MealLocalDataSource lSrc;

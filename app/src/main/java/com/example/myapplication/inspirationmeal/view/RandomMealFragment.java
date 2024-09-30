@@ -8,13 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +20,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
-import com.example.myapplication.favoritemeal.model.MealLocalDataSource;
+import com.example.myapplication.model_app.MealLocalDataSource;
 import com.example.myapplication.favoritemeal.view.FavMealFragment;
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
-import com.example.myapplication.inspirationmeal.Model.RandomMealsRemoteDataSource;
+import com.example.myapplication.model_app.RandomMeals;
+import com.example.myapplication.model_app.RandomMealsRemoteDataSource;
 import com.example.myapplication.inspirationmeal.presenter.RandomMealPresenter;
 
 import java.util.List;

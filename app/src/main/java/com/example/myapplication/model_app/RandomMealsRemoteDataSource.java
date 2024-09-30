@@ -1,4 +1,4 @@
-package com.example.myapplication.inspirationmeal.Model;
+package com.example.myapplication.model_app;
 
 import android.util.Log;
 
@@ -12,12 +12,12 @@ public class RandomMealsRemoteDataSource {
     final static String url = "https://www.themealdb.com/";
     public static final String TAG = "Retrofit connection";
     Retrofit connectRetro;
-    RandomMealAPI api;
+    MealPlannerApiService api;
     private static RandomMealsRemoteDataSource randomMealSrc = null;
     private RandomMealsRemoteDataSource(){
         connectRetro = new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create())
                 .build();
-        api = connectRetro.create(RandomMealAPI.class);
+        api = connectRetro.create(MealPlannerApiService.class);
     }
     public static RandomMealsRemoteDataSource getInstance(){
         if(randomMealSrc == null){
@@ -25,19 +25,19 @@ public class RandomMealsRemoteDataSource {
         }
         return randomMealSrc;
     }
-    public void makeNetworkCall(NetworkCallBack networkCallBack){
-        Call<JsonRandomMealsResponse> call = api.getRasonse();
-        call.enqueue(new Callback<JsonRandomMealsResponse>() {
+    public void makeNetworkCall(MealPlannerNetworkCallBack mealPlannerNetworkCallBack){
+        Call<ApiMealResponse<RandomMeals>> call = api.getRandomMealResponse();
+        call.enqueue(new Callback<ApiMealResponse<RandomMeals>>() {
             @Override
-            public void onResponse(Call<JsonRandomMealsResponse> call, Response<JsonRandomMealsResponse> response) {
+            public void onResponse(Call<ApiMealResponse<RandomMeals>> call, Response<ApiMealResponse<RandomMeals>> response) {
                 Log.i(TAG, "onResponse: Successed");
-                networkCallBack.onSuccessful(response.body().meals);
+                mealPlannerNetworkCallBack.onSuccessful(response.body().meals);
 
             }
 
             @Override
-            public void onFailure(Call<JsonRandomMealsResponse> call, Throwable throwable) {
-                networkCallBack.onFailureResult(throwable.getMessage());
+            public void onFailure(Call<ApiMealResponse<RandomMeals>> call, Throwable throwable) {
+                mealPlannerNetworkCallBack.onFailureResult(throwable.getMessage());
                 throwable.printStackTrace();
             }
         });

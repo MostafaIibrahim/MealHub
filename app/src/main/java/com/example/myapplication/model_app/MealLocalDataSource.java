@@ -1,11 +1,9 @@
-package com.example.myapplication.favoritemeal.model;
+package com.example.myapplication.model_app;
 
 
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.myapplication.inspirationmeal.Model.RandomMeals;
 
 import java.util.List;
 
