@@ -1,14 +1,14 @@
 package com.example.myapplication.details_meal.presenter;
 
-import com.example.myapplication.model_app.RandomMeal;
-import com.example.myapplication.model_app.MealLocalDataSource;
+import com.example.myapplication.model_app.Meal;
+import com.example.myapplication.model_app.MealRepository;
 
 public class DetailsPresenter {
-    MealLocalDataSource mealLocalDataSource;
-    public DetailsPresenter(MealLocalDataSource mealLocalSrc){
-        mealLocalDataSource = mealLocalSrc;
+    MealRepository mealRepository;
+    public DetailsPresenter(MealRepository mealRepository){
+        this.mealRepository = mealRepository;
     }
-    public void addToFav(RandomMeal randomMeal){
-        mealLocalDataSource.insertMeal(randomMeal);
+    public void addToFav(Meal meal){
+        mealRepository.insertMeal(meal);
     }
 }

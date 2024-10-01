@@ -1,29 +1,26 @@
 package com.example.myapplication.inspirationmeal.presenter;
 
-import com.example.myapplication.model_app.RandomMeal;
-import com.example.myapplication.model_app.MealLocalDataSource;
-import com.example.myapplication.model_app.MealPlannerNetworkCallBack;
-import com.example.myapplication.model_app.MealRemoteDataSource;
+import com.example.myapplication.model_app.Meal;
+import com.example.myapplication.model_app.MealRepository;
+import com.example.myapplication.model_app.utility.MealNetworkCallBack;
 import com.example.myapplication.inspirationmeal.view.IView;
 
 import java.util.List;
 
-public class RandomMealPresenter implements MealPlannerNetworkCallBack<RandomMeal> {
+public class RandomMealPresenter implements MealNetworkCallBack {
     IView view;
-    MealRemoteDataSource rSrc;
-    MealLocalDataSource lSrc;
-    public RandomMealPresenter(IView view, MealRemoteDataSource rSrc , MealLocalDataSource lSrc){
+    MealRepository repository;
+    public RandomMealPresenter(IView view, MealRepository repo){
         this.view = view;
-        this.rSrc = rSrc;
-        this.lSrc = lSrc;
+        repository = repo;
     }
-    public void addMeal(RandomMeal randomMeal){
-        lSrc.insertMeal(randomMeal);
+    public void addMeal(Meal meal){
+        repository.insertMeal(meal);
     }
-    public void rmvMeal(RandomMeal randomMeal) { lSrc.deleteMeal(randomMeal);}
-    public void requestData(){ rSrc.makeNetworkCall(this); }
+    public void rmvMeal(Meal meal) { repository.deleteMeal(meal);}
+    public void requestData(){ repository.getMealNetworkCallBack(this);  }
     @Override
-    public void onSuccessful(List<RandomMeal> meals) {
+    public void mealResponseOnSuccessful(List<Meal> meals) {
         view.getRandomMeal(meals);
     }
 

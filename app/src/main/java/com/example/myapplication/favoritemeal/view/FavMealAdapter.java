@@ -18,20 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.myapplication.model_app.RandomMeal;
+import com.example.myapplication.model_app.Meal;
 
 import java.util.List;
 
 public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHolder> {
     private final Context context;
-    private List<RandomMeal> values;
+    private List<Meal> values;
     private static final String TAG = "RecycleView";
     OnDeleteMealListener listener;
     public FavMealAdapter(Context m_context ,OnDeleteMealListener listener){
         context = m_context;
         this.listener = listener;
     }
-    public void setList(List<RandomMeal> updatedList){
+    public void setList(List<Meal> updatedList){
         values = updatedList;
     }
 

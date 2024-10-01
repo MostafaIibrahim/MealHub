@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName;
    
 public class MealApiResponse<T>{
    @SerializedName("meals")
-   List<T> meals;
+   public List<T> meals;
 }

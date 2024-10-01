@@ -20,8 +20,10 @@ import android.view.ViewGroup;
 
 import com.example.MealHub.R;
 import com.example.myapplication.details_meal.view.DetailsMealActivity;
-import com.example.myapplication.model_app.RandomMeal;
-import com.example.myapplication.model_app.MealLocalDataSource;
+import com.example.myapplication.model_app.Meal;
+import com.example.myapplication.model_app.MealRemoteDataSourceImp;
+import com.example.myapplication.model_app.MealRepositoryImp;
+import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
 import com.example.myapplication.favoritemeal.presenter.FavMealPresenter;
 
 import java.util.List;
@@ -51,7 +53,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new FavMealPresenter(MealLocalDataSource.getInstance(getContext()),this);
+        presenter = new FavMealPresenter(MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()),this);
         favRcyView = view.findViewById(R.id.favMealRcyclerView);
         favRcyView.setHasFixedSize(true);
         LinearLayoutManager layoutManager =  new LinearLayoutManager(getContext());
@@ -59,22 +61,22 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
         favRcyView.setLayoutManager(layoutManager);
         favAdapter = new FavMealAdapter(getContext(),this);
 
-        Observer<List<RandomMeal>> observer = new Observer<List<RandomMeal>>() {
+        Observer<List<Meal>> observer = new Observer<List<Meal>>() {
             @Override
-            public void onChanged(List<RandomMeal> products) {
+            public void onChanged(List<Meal> products) {
                 favAdapter.setList(products);
                 favRcyView.setAdapter(favAdapter);
                 favAdapter.notifyDataSetChanged();
             }
         };
-        LiveData<List<RandomMeal>> liveData = presenter.getUpdatedData();
+        LiveData<List<Meal>> liveData = presenter.getUpdatedData();
         liveData.observe(getViewLifecycleOwner(),observer);
 
 
     }
 
     @Override
-    public LiveData<List<RandomMeal>> updateList() {
+    public LiveData<List<Meal>> updateList() {
         return null;
     }
 
@@ -84,15 +86,15 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     }
 
     @Override
-    public void onDeleteClickListener(RandomMeal randomMeal) {
-        presenter.deleteRequest(randomMeal);
+    public void onDeleteClickListener(Meal meal) {
+        presenter.deleteRequest(meal);
 
     }
 
     @Override
-    public void onDetailsClickListener(RandomMeal randomMeal) {
+    public void onDetailsClickListener(Meal meal) {
         Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-        outIntent.putExtra(MEAL_OBJECT, randomMeal);
+        outIntent.putExtra(MEAL_OBJECT, meal);
         startActivity(outIntent);
     }
 }
