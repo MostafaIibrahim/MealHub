@@ -166,4 +166,22 @@ public class MealRemoteDataSourceImp implements MealRemoteDataSource {
             }
         });
     }
+    @Override
+    public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack){
+        serviceCall.searchMealsByFirstLitter(query).enqueue(new Callback<MealApiResponse<Meal>>() {
+            @Override
+            public void onResponse(Call<MealApiResponse<Meal>> call, Response<MealApiResponse<Meal>> response) {
+                Log.i(TAG, "onResponse: Successed");
+                mealNetworkCallBack.mealResponseOnSuccessful(response.body().meals);
+
+            }
+
+            @Override
+            public void onFailure(Call<MealApiResponse<Meal>> call, Throwable throwable) {
+                mealNetworkCallBack.onFailureResult(throwable.getMessage());
+                throwable.printStackTrace();
+            }
+        });
+    }
+
 }

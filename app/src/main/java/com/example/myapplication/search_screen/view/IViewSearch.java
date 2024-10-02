@@ -11,6 +11,6 @@ public interface IViewSearch {
     public void getCountries(List<CountryMeal> country);
     public void getIngredients(List<IngredientMeal> ingredients);
     public void getCategoryMeals(List<CategoryMeal> categoryMeals);
-    public void showSearchResults(List<Meal> meals);
+    public void getMealsBySearch(List<Meal> meals);
     public void showError(String errorMsg);
 }

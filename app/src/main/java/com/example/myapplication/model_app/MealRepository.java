@@ -24,6 +24,7 @@ public interface MealRepository {
 
     void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack);
 
+    public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
     LiveData<List<Meal>> getStoredMeals();
     void deleteMeal(Meal product);
     void insertMeal(Meal product);

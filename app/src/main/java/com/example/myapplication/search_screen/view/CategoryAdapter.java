@@ -42,7 +42,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
         holder.name.setText(meals.get(position).getStrCategory());
         Glide.with(context).load(meals.get(position).getStrCategoryThumb())
-                .placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).circleCrop()
+                .placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground).centerCrop()
                 .into(holder.thumbnail);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

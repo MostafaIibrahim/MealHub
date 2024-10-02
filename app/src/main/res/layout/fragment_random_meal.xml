@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardFavView"
+        android:id="@+id/cardSearchView"
         android:layout_width="357dp"
         android:layout_height="237dp"
         android:layout_marginTop="8dp"
@@ -156,7 +156,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/cardFavView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardSearchView" />
 
     <TextView
         android:id="@+id/textView9"

@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
@@ -34,15 +36,16 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     private static final int FILTER_BY_CATEGORY = 1;
     private static final int FILTER_BY_INGREDIENT = 2;
     private int currentFilter = FILTER_BY_NAME;
-
+    LinearLayout linearLayout;
     SearchView searchBar;
     private RadioGroup filterRadioGroup;
     RadioButton radioName, radioCategory, radioIngredient;
-    RecyclerView  countryRcy,ingredientsRcy,getCategoryRcy;
+    RecyclerView  countryRcy,ingredientsRcy,getCategoryRcy,searchRcy;
     SearchPresenter presenter;
     CountryAdapter countryAdapter;
     CategoryAdapter categoryAdapter;
     IngredientAdapter ingredientAdapter;
+    SearchAdapter searchAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -71,6 +74,8 @@ public class SearchFragment extends Fragment implements IViewSearch  {
         radioName = view.findViewById(R.id.radioName);
         radioCategory = view.findViewById(R.id.radioCategory);
         radioIngredient = view.findViewById(R.id.radioIngredient);
+        searchRcy = view.findViewById(R.id.search_results_recyclerview);
+        linearLayout = view.findViewById(R.id.linearLayoutListBy);
         presenter = new SearchPresenter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
 
         presenter.requestCategoryData();
@@ -81,17 +86,27 @@ public class SearchFragment extends Fragment implements IViewSearch  {
         countryAttachToAdapter();
         categoryAttachToAdapter();
         ingredientAttachToAdapter();
-
+        searchResultAttachToAdapter();
 
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
+                searchRcy.setVisibility(View.VISIBLE);
                 performSearch(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
+                if (!s.isEmpty()) {
+                    linearLayout.setVisibility(View.GONE);
+                    searchRcy.setVisibility(View.VISIBLE);
+                    presenter.searchMealByLetter(s);
+                } else {
+                    searchRcy.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
                 return false;
             }
         });
@@ -141,6 +156,13 @@ public class SearchFragment extends Fragment implements IViewSearch  {
         getCategoryRcy.setLayoutManager(layoutManager);
         categoryAdapter = new CategoryAdapter(getContext());
     }
+    void searchResultAttachToAdapter(){
+        searchRcy.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        searchRcy.setLayoutManager(layoutManager);
+        searchAdapter = new SearchAdapter(getContext());
+    }
     void ingredientAttachToAdapter(){
         ingredientsRcy.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 8);
@@ -167,8 +189,11 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     }
 
     @Override
-    public void showSearchResults(List<Meal> meals) {
+    public void getMealsBySearch(List<Meal> meals) {
         Toast.makeText(getContext(), meals.get(0).getStrMeal(), Toast.LENGTH_SHORT).show();
+        searchRcy.setAdapter(searchAdapter);
+        searchAdapter.updateMeals(meals);
+        searchAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -69,7 +69,7 @@ public class RandomMealFragment extends Fragment implements IView {
         randImg = view.findViewById(R.id.rMealThumb);
         categoryTxt = view.findViewById(R.id.categoryTxt);
         countryTxt = view.findViewById(R.id.areaTxt);
-        card = view.findViewById(R.id.cardFavView);
+        card = view.findViewById(R.id.cardSearchView);
 
         FragmentManager manager = getParentFragmentManager();
 

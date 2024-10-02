@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name="com.example.myapplication.meal_list_activity.view.ListOfMeals"
+            android:exported="false" />
+        <activity
             android:name="com.example.myapplication.details_meal.view.DetailsMealActivity"
             android:exported="false" />
         <activity

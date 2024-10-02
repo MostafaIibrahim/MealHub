@@ -13,9 +13,10 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MealPlannerApiService{
+    /* Response of Random meal in home screen */
     @GET("api/json/v1/1/random.php")
     Call<MealApiResponse<Meal>> getRandomMealResponse();
-
+    /* Response of the category in search screen */
     @GET("api/json/v1/1/categories.php")
     Call<CategoryMealApiResponse<CategoryMeal>> getCategoryMealResponse();
 
@@ -28,6 +29,8 @@ public interface MealPlannerApiService{
     @GET("/api/json/v1/1/search.php")
     Call<MealApiResponse<Meal>> searchMealsByName(@Query("s") String mealName);
 
+    @GET("/api/json/v1/1/search.php")
+    Call<MealApiResponse<Meal>> searchMealsByFirstLitter(@Query("f") String mealFirstLetter);
     @GET("/api/json/v1/1/filter.php")
     Call<MealApiResponse<Meal>> searchMealsByCategory(@Query("c") String category);
 

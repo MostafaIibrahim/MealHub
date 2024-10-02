@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardFavView"
+    android:id="@+id/cardSearchView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -15,7 +15,7 @@
 
         <!-- Thumbnail Image on the left -->
         <ImageView
-            android:id="@+id/favThumb"
+            android:id="@+id/searchThumb"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginEnd="16dp"
@@ -36,12 +36,12 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/rmvBtn"
-            app:layout_constraintStart_toEndOf="@id/favThumb"
+            app:layout_constraintStart_toEndOf="@id/searchThumb"
             app:layout_constraintTop_toTopOf="parent">
 
             <!-- Meal Name -->
             <TextView
-                android:id="@+id/favTitleTxt"
+                android:id="@+id/searchTitleTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"

@@ -64,6 +64,12 @@ public class MealRepositoryImp implements  MealRepository {
     public void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack){
         remoteDataSource.getIngreidentMealNetworkCallBack(ingredientNetworkCallBack);
     }
+
+    @Override
+    public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack) {
+        remoteDataSource.getMealByFirstLetterNetworkCallBack(query,mealNetworkCallBack);
+    }
+
     @Override
     public LiveData<List<Meal>> getStoredMeals(){ return mealLocalDataSource.getStoredMeals(); }
     @Override
