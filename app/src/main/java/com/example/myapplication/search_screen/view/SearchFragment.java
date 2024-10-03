@@ -165,7 +165,7 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     }
     void ingredientAttachToAdapter(){
         ingredientsRcy.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 8);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         ingredientsRcy.setLayoutManager(layoutManager);
         ingredientAdapter = new IngredientAdapter(getContext());

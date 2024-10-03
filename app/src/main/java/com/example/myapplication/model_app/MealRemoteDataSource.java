@@ -16,9 +16,14 @@ public interface MealRemoteDataSource {
 
     public void getCategoryMealNetworkCallBack(CategroyNetworkCallBack categroyNetworkCallBack);
 
+    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack);
+
+    public void getMealByIdNetworkCallBack(String id, MealNetworkCallBack mealNetworkCallBack);
+
     void getCountryMealNetworkCallBack(CountryNetworkCallBack countryNetworkCallBack);
 
     void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack);
+
 
     public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
 }

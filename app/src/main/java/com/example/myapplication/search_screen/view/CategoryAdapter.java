@@ -1,6 +1,7 @@
 package com.example.myapplication.search_screen.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
+import com.example.myapplication.details_meal.view.DetailsMealActivity;
+import com.example.myapplication.meal_list_activity.view.ListOfMeals;
 import com.example.myapplication.model_app.category.CategoryMeal;
 
 import java.util.List;
@@ -22,7 +25,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private final Context context;
     private List<CategoryMeal> meals;
     private static final String TAG = "Category Adapter RecycleView";
-
+    public static final String CATEGORY_NAME = "Category Name";
     public CategoryAdapter(Context context) {
         this.context = context;
     }
@@ -48,6 +51,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Click Listener is ok", Toast.LENGTH_SHORT).show();
+                Intent toListCategory = new Intent(context, ListOfMeals.class);
+                toListCategory.putExtra(CATEGORY_NAME,meals.get(position).getStrCategory());
+                context.startActivity(toListCategory);
             }
         });
     }

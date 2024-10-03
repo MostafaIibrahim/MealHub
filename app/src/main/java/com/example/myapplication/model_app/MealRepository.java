@@ -22,9 +22,13 @@ public interface MealRepository {
 
     void getCountryMealNetworkCallBack(CountryNetworkCallBack countryNetworkCallBack);
 
+    public void getMealByIdNetworkCallBack(String id, MealNetworkCallBack mealNetworkCallBack);
+
     void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack);
 
     public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
+
+    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack);
     LiveData<List<Meal>> getStoredMeals();
     void deleteMeal(Meal product);
     void insertMeal(Meal product);

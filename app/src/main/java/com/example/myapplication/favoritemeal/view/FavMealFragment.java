@@ -1,6 +1,7 @@
 package com.example.myapplication.favoritemeal.view;
 
 import static com.example.myapplication.inspirationmeal.view.RandomMealFragment.MEAL_OBJECT;
+import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -94,7 +95,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     @Override
     public void onDetailsClickListener(Meal meal) {
         Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-        outIntent.putExtra(MEAL_OBJECT, meal);
+        outIntent.putExtra(MEAL_ID, meal.getIdMeal());
         startActivity(outIntent);
     }
 }

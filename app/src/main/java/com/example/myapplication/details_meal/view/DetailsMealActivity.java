@@ -1,5 +1,8 @@
 package com.example.myapplication.details_meal.view;
 import static com.example.myapplication.inspirationmeal.view.RandomMealFragment.MEAL_OBJECT;
+import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -22,8 +25,9 @@ import com.example.myapplication.model_app.MealRepository;
 import com.example.myapplication.model_app.MealRepositoryImp;
 import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
 
-public class DetailsMealActivity extends AppCompatActivity {
+public class DetailsMealActivity extends AppCompatActivity implements IViewDetails{
     Meal objMeal;
+    String recievedObj;
     ImageView mealPic;
     TextView titleTxt,categoryTxt,areaTxt,stepsTxt;
     RecyclerView rcyc_ingredients;
@@ -34,14 +38,12 @@ public class DetailsMealActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        presenter = new DetailsPresenter(MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this), MealRemoteDataSourceImp.getInstance()));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_meal);
-        objMeal = (Meal) getIntent().getSerializableExtra(MEAL_OBJECT);
         //Get Resource id
         mealPic = findViewById(R.id.detailedMealThumbnail);
         titleTxt = findViewById(R.id.detailedMealName);
@@ -51,16 +53,16 @@ public class DetailsMealActivity extends AppCompatActivity {
         rcyc_ingredients = findViewById(R.id.ingredientsRecyclerView);
         youtubeVideo = findViewById(R.id.youtubeVideo);
         favButton = findViewById(R.id.btnAddToFavorite);
+        recievedObj = getIntent().getStringExtra(MEAL_ID);
+        presenter = new DetailsPresenter(this ,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this), MealRemoteDataSourceImp.getInstance()));
+
         //Put these in a function
-        displayMealDetails();
+        presenter.requestMealById(recievedObj);
         attachToAdapter();
-        favButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //I want to be able to add to fav and remove from fav
+
+        favButton.setOnClickListener( view -> {
                 presenter.addToFav(objMeal);
                 Toast.makeText(DetailsMealActivity.this, "This meal is added to favorite", Toast.LENGTH_SHORT).show();
-            }
         });
 
     }
@@ -69,9 +71,7 @@ public class DetailsMealActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager =  new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         rcyc_ingredients.setLayoutManager(layoutManager);
-        adapterIngredients = new AdapterIngredients(this , objMeal.getListIngredients(), objMeal.getListMeasures());
-        rcyc_ingredients.setAdapter(adapterIngredients);
-        adapterIngredients.notifyDataSetChanged();
+
     }
     void displayMealDetails(){
         Glide.with(getApplicationContext()).load(objMeal.getStrMealThumb()).apply(new RequestOptions().override(200,200))
@@ -86,7 +86,20 @@ public class DetailsMealActivity extends AppCompatActivity {
         String videoUrl = objMeal.getStrYoutube();
         String videoId = videoUrl.substring(videoUrl.lastIndexOf('=') + 1); // Extract the video ID
         String embedUrl = "https://www.youtube.com/embed/" + videoId;
-        System.out.println(embedUrl);
         youtubeVideo.loadUrl(embedUrl);
+    }
+
+    @Override
+    public void getMealFromRespond(Meal meal) {
+        objMeal = meal;
+        displayMealDetails();
+        adapterIngredients = new AdapterIngredients(this , objMeal.getListIngredients(), objMeal.getListMeasures());
+        rcyc_ingredients.setAdapter(adapterIngredients);
+        adapterIngredients.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailureResult(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

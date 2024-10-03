@@ -1,5 +1,7 @@
 package com.example.myapplication.inspirationmeal.view;
 
+import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -96,7 +98,7 @@ public class RandomMealFragment extends Fragment implements IView {
             @Override
             public void onClick(View view) {
                 Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-                outIntent.putExtra(MEAL_OBJECT, _Random_meal.get(0));
+                outIntent.putExtra(MEAL_ID, _Random_meal.get(0).getIdMeal());
                 startActivity(outIntent);
             }
         });

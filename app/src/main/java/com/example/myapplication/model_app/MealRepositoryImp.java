@@ -61,6 +61,11 @@ public class MealRepositoryImp implements  MealRepository {
     }
 
     @Override
+    public void getMealByIdNetworkCallBack(String id, MealNetworkCallBack mealNetworkCallBack) {
+        remoteDataSource.getMealByIdNetworkCallBack(id,mealNetworkCallBack);
+    }
+
+    @Override
     public void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack){
         remoteDataSource.getIngreidentMealNetworkCallBack(ingredientNetworkCallBack);
     }
@@ -68,6 +73,11 @@ public class MealRepositoryImp implements  MealRepository {
     @Override
     public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack) {
         remoteDataSource.getMealByFirstLetterNetworkCallBack(query,mealNetworkCallBack);
+    }
+
+    @Override
+    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack) {
+        remoteDataSource.getMealByCountryNetworkCallBack(country,mealNetworkCallBack);
     }
 
     @Override

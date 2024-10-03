@@ -1,6 +1,7 @@
 package com.example.myapplication.search_screen.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
+import com.example.myapplication.details_meal.view.DetailsMealActivity;
+import com.example.myapplication.meal_list_activity.view.ListOfMeals;
 import com.example.myapplication.model_app.country_model.CountryMeal;
 import com.example.myapplication.search_screen.presenter.SearchPresenter;
 
@@ -23,6 +26,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
 private final Context context;
 private List<CountryMeal> countries;
 private static final String TAG = "Ingredient Adapter RecycleView";
+public static final String COUNTRY_NAME = "Country Name";
 private String imgUrl;
 SearchPresenter presenter;
 
@@ -56,6 +60,10 @@ public void onBindViewHolder(@NonNull CountryAdapter.ViewHolder holder, int posi
         @Override
         public void onClick(View view) {
             Toast.makeText(context, "Click Listener is ok from country", Toast.LENGTH_SHORT).show();
+            Intent toListCountry = new Intent(context, ListOfMeals.class);
+            toListCountry.putExtra(COUNTRY_NAME,countries.get(position).getStrArea());
+            System.out.println("I am in country and I will move to list of meal activity");
+            context.startActivity(toListCountry);
         }
     });
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication.search_screen.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
+import com.example.myapplication.details_meal.view.DetailsMealActivity;
+import com.example.myapplication.meal_list_activity.view.ListOfMeals;
 import com.example.myapplication.model_app.ingreident.IngredientMeal;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private final Context context;
     private List<IngredientMeal> ingredientMeals;
     private static final String TAG = "Ingredient Adapter RecycleView";
+    public static final String Ingredient_NAME = "Ingredient Name";
     private String imgUrl;
 
     public IngredientAdapter(Context context) {
@@ -52,6 +56,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Click Listener is ok from ingredient", Toast.LENGTH_SHORT).show();
+                Intent toListCountry = new Intent(context, ListOfMeals.class);
+                toListCountry.putExtra(Ingredient_NAME,ingredientMeals.get(position).getStrIngredient());
+                context.startActivity(toListCountry);
             }
         });
     }

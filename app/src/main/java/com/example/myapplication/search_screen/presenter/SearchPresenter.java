@@ -46,10 +46,13 @@ public class SearchPresenter implements MealNetworkCallBack, CategroyNetworkCall
     public void searchByIngredient(String query) { repository.getMealsByIngredientNetworkCallBack(query,this);}
 
     public void searchMealByLetter(String query) { repository.getMealByFirstLetterNetworkCallBack(query,this); }
+
+    public void searchByCountry(String country) {
+        System.out.println("I am here in search by country");
+        repository.getMealByCountryNetworkCallBack(country,this);}
+
     @Override
     public void mealResponseOnSuccessful(List<Meal> meals) {
-
-        System.out.println(meals.get(0).getStrMeal());
         view.getMealsBySearch(meals);
     }
 

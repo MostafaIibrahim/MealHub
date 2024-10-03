@@ -26,15 +26,20 @@ public interface MealPlannerApiService{
     @GET("api/json/v1/1/list.php?a=list")
     Call<MealApiResponse<CountryMeal>> getCountryMealResponse();
 
-    @GET("/api/json/v1/1/search.php")
+    @GET("api/json/v1/1/search.php")
     Call<MealApiResponse<Meal>> searchMealsByName(@Query("s") String mealName);
 
-    @GET("/api/json/v1/1/search.php")
+    @GET("api/json/v1/1/search.php")
     Call<MealApiResponse<Meal>> searchMealsByFirstLitter(@Query("f") String mealFirstLetter);
-    @GET("/api/json/v1/1/filter.php")
+    @GET("api/json/v1/1/filter.php")
     Call<MealApiResponse<Meal>> searchMealsByCategory(@Query("c") String category);
 
-    @GET("/api/json/v1/1/filter.php")
+    @GET("api/json/v1/1/filter.php")
     Call<MealApiResponse<Meal>> searchMealsByIngredient(@Query("i") String ingredient);
 
+    @GET("api/json/v1/1/filter.php")
+    Call<MealApiResponse<Meal>> searchMealsByCountry(@Query("a") String country);
+
+    @GET("api/json/v1/1/lookup.php")
+    Call<MealApiResponse<Meal>> searchMealsById(@Query("i") String id);
 }

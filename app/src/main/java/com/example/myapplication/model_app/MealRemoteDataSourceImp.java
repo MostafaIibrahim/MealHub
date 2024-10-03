@@ -114,6 +114,41 @@ public class MealRemoteDataSourceImp implements MealRemoteDataSource {
             }
         });
     }
+    @Override
+    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack){
+        serviceCall.searchMealsByCountry(country).enqueue(new Callback<MealApiResponse<Meal>>() {
+            @Override
+            public void onResponse(Call<MealApiResponse<Meal>> call, Response<MealApiResponse<Meal>> response) {
+                Log.i(TAG, "onResponse: Successed");
+                mealNetworkCallBack.mealResponseOnSuccessful(response.body().meals);
+
+            }
+
+            @Override
+            public void onFailure(Call<MealApiResponse<Meal>> call, Throwable throwable) {
+                mealNetworkCallBack.onFailureResult(throwable.getMessage());
+                throwable.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getMealByIdNetworkCallBack(String id, MealNetworkCallBack mealNetworkCallBack) {
+        serviceCall.searchMealsById(id).enqueue(new Callback<MealApiResponse<Meal>>() {
+            @Override
+            public void onResponse(Call<MealApiResponse<Meal>> call, Response<MealApiResponse<Meal>> response) {
+                Log.i(TAG, "onResponse: Successed");
+                mealNetworkCallBack.mealResponseOnSuccessful(response.body().meals);
+
+            }
+
+            @Override
+            public void onFailure(Call<MealApiResponse<Meal>> call, Throwable throwable) {
+                mealNetworkCallBack.onFailureResult(throwable.getMessage());
+                throwable.printStackTrace();
+            }
+        });
+    }
 
     @Override
     public void getCategoryMealNetworkCallBack(CategroyNetworkCallBack categroyNetworkCallBack){
@@ -166,6 +201,9 @@ public class MealRemoteDataSourceImp implements MealRemoteDataSource {
             }
         });
     }
+
+
+
     @Override
     public void getMealByFirstLetterNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack){
         serviceCall.searchMealsByFirstLitter(query).enqueue(new Callback<MealApiResponse<Meal>>() {
