@@ -57,8 +57,12 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         //I need here to check if the the coming object is by obj name or it's by id
         if (getIntent().hasExtra(WHOLE_OBJ)){
             // then get the obj and assign it to object of meal
+            objMeal = (Meal) getIntent().getSerializableExtra(WHOLE_OBJ);
             //call function and send the obj to call display it directly
+            displayMealDetails();
         }else if (getIntent().hasExtra(MEAL_ID)){
+            recievedObj = getIntent().getStringExtra(MEAL_ID);
+            presenter.requestMealById(recievedObj);
             //Then requestMealById which will in return will call callBack and display the received object
         }
         //Put these in a function
@@ -111,6 +115,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         String videoId = videoUrl.substring(videoUrl.lastIndexOf('=') + 1); // Extract the video ID
         String embedUrl = "https://www.youtube.com/embed/" + videoId;
         youtubeVideo.loadUrl(embedUrl);
+        attachAdapter();
     }
     private void setComponentsId(){
         mealPic = findViewById(R.id.detailedMealThumbnail);
@@ -122,15 +127,19 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         youtubeVideo = findViewById(R.id.youtubeVideo);
         favButton = findViewById(R.id.btnAddToFavorite);
         addPlanBtn = findViewById(R.id.btnAddToPlan);
+
+    }
+    void attachAdapter(){
+        adapterIngredients = new AdapterIngredients(this , objMeal.getListIngredients(), objMeal.getListMeasures());
+        rcyc_ingredients.setAdapter(adapterIngredients);
+        adapterIngredients.notifyDataSetChanged();
     }
 
     @Override
     public void getMealFromRespond(Meal meal) {
         objMeal = meal;
         displayMealDetails();
-        adapterIngredients = new AdapterIngredients(this , objMeal.getListIngredients(), objMeal.getListMeasures());
-        rcyc_ingredients.setAdapter(adapterIngredients);
-        adapterIngredients.notifyDataSetChanged();
+
     }
 
     @Override
