@@ -2,17 +2,20 @@ package com.example.myapplication.model_app;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.myapplication.calender_screen.presenter_calender.PlannerPresenterCallBack;
 import com.example.myapplication.model_app.db.MealLocalDataSource;
 import com.example.myapplication.model_app.utility.CategroyNetworkCallBack;
 import com.example.myapplication.model_app.utility.CountryNetworkCallBack;
 import com.example.myapplication.model_app.utility.IngredientNetworkCallBack;
 import com.example.myapplication.model_app.utility.MealNetworkCallBack;
 
+import java.util.Collections;
 import java.util.List;
 
-public class MealRepositoryImp implements  MealRepository {
+public class MealRepositoryImp implements  MealRepository , DbcallBack{
     private MealRemoteDataSource remoteDataSource;
     private MealLocalDataSource mealLocalDataSource;
+    PlannerPresenterCallBack callBack;
     private static MealRepositoryImp repo = null;
     public static MealRepositoryImp getInstance(MealLocalDataSource localSrc,MealRemoteDataSource remoteSrc){
         if (repo == null){
@@ -65,6 +68,7 @@ public class MealRepositoryImp implements  MealRepository {
         remoteDataSource.getMealByIdNetworkCallBack(id,mealNetworkCallBack);
     }
 
+
     @Override
     public void getIngreidentMealNetworkCallBack(IngredientNetworkCallBack ingredientNetworkCallBack){
         remoteDataSource.getIngreidentMealNetworkCallBack(ingredientNetworkCallBack);
@@ -88,4 +92,29 @@ public class MealRepositoryImp implements  MealRepository {
     public void insertMeal(Meal product){ mealLocalDataSource.insertMeal(product);}
     @Override
     public Meal isMealExist(String idmeal){return mealLocalDataSource.isMealExist(idmeal);}
+
+    @Override
+    public LiveData<List<WeeklyMealPlan>> getMealsOfDay(String mealDate) {
+        return mealLocalDataSource.getMealsOfDay(mealDate);
+    }
+
+    @Override
+    public void insertPlannedMeal(WeeklyMealPlan plannedMeal) {
+        mealLocalDataSource.insertPlannedMeal(plannedMeal);
+    }
+
+    @Override
+    public void deletePlannedMeal(WeeklyMealPlan plannedMeal) {
+        mealLocalDataSource.deletePlannedMeal(plannedMeal);
+    }
+
+    @Override
+    public LiveData<List<WeeklyMealPlan>> getStoredPlannedMeals() {
+        return mealLocalDataSource.getStoredPlannedMeals();
+    }
+
+    @Override
+    public void onSuccessful(List<WeeklyMealPlan> plannedMeal) {
+        callBack.onSuccessful(plannedMeal);
+    }
 }

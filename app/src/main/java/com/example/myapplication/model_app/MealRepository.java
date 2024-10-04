@@ -2,6 +2,7 @@ package com.example.myapplication.model_app;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.myapplication.calender_screen.presenter_calender.PlannerPresenterCallBack;
 import com.example.myapplication.model_app.utility.CategroyNetworkCallBack;
 import com.example.myapplication.model_app.utility.CountryNetworkCallBack;
 import com.example.myapplication.model_app.utility.IngredientNetworkCallBack;
@@ -33,4 +34,12 @@ public interface MealRepository {
     void deleteMeal(Meal product);
     void insertMeal(Meal product);
     Meal isMealExist(String idmeal);
+
+    public LiveData<List<WeeklyMealPlan>> getMealsOfDay(String mealDate);
+
+    void insertPlannedMeal(WeeklyMealPlan plannedMeal);
+
+    void deletePlannedMeal(WeeklyMealPlan plannedMeal);
+
+    LiveData<List<WeeklyMealPlan>> getStoredPlannedMeals();
 }

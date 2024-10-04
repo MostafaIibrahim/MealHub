@@ -1,6 +1,5 @@
 package com.example.myapplication.favoritemeal.view;
 
-import static com.example.myapplication.inspirationmeal.view.RandomMealFragment.MEAL_OBJECT;
 import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
 
 import android.content.Intent;
@@ -34,7 +33,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     RecyclerView favRcyView;
     FavMealAdapter favAdapter;
     FavMealPresenter presenter;
-    CardView card;
+    public final static String WHOLE_OBJ = "Meal_Object";
     public FavMealFragment() {
         // Required empty public constructor
     }
@@ -95,7 +94,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     @Override
     public void onDetailsClickListener(Meal meal) {
         Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-        outIntent.putExtra(MEAL_ID, meal.getIdMeal());
+        outIntent.putExtra(WHOLE_OBJ, meal);
         startActivity(outIntent);
     }
 }

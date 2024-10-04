@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.Meal;
-import com.example.myapplication.model_app.category.CategoryMeal;
 
 import java.util.List;
 
@@ -73,9 +70,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
-            card = layout.findViewById(R.id.cardSearchView);
-            name = layout.findViewById(R.id.searchTitleTxt);
-            thumbnail = layout.findViewById(R.id.searchThumb);
+            card = layout.findViewById(R.id.cardCalendarView);
+            name = layout.findViewById(R.id.calendarTitleTxt);
+            thumbnail = layout.findViewById(R.id.calendarThumb);
         }
 
     }

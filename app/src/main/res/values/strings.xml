@@ -17,4 +17,7 @@
     <string name="seeall">See all</string>
     <string name="filter">Filter By:</string>
     <string name="details">Show more</string>
+    <string name="day">TODAY IS</string>
+    <string name="label">Your Schedule</string>
+    <string name="rmv">Remove</string>
 </resources>

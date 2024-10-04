@@ -80,11 +80,11 @@ public class FavMealAdapter extends RecyclerView.Adapter<FavMealAdapter.ViewHold
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            description = layout.findViewById(R.id.favDescriptionTxt);
-            name = layout.findViewById(R.id.searchTitleTxt);
-            thumbnail = layout.findViewById(R.id.searchThumb);
-            delete = layout.findViewById(R.id.rmvBtn);
-            card = layout.findViewById(R.id.cardSearchView);
+            description = layout.findViewById(R.id.calendarDescriptionTxt);
+            name = layout.findViewById(R.id.calendarTitleTxt);
+            thumbnail = layout.findViewById(R.id.calendarThumb);
+            delete = layout.findViewById(R.id.calendarRmvBtn);
+            card = layout.findViewById(R.id.cardCalendarView);
         }
     }
 }

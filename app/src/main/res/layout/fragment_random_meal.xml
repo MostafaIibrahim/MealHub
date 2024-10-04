@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardSearchView"
+        android:id="@+id/cardCalendarView"
         android:layout_width="357dp"
         android:layout_height="237dp"
         android:layout_marginTop="8dp"
@@ -144,6 +144,16 @@
                 android:translationY="-20dp"
                 tools:text="country" />
 
+            <ImageButton
+                android:id="@+id/addCalendarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:foregroundGravity="bottom|right"
+                android:src="@drawable/baseline_add_24"
+                android:translationX="-20dp"
+                android:translationY="-20dp" />
+
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
@@ -156,7 +166,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/cardSearchView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardCalendarView" />
 
     <TextView
         android:id="@+id/textView9"

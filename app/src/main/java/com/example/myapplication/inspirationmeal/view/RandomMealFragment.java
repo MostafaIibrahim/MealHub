@@ -1,5 +1,6 @@
 package com.example.myapplication.inspirationmeal.view;
 
+import static com.example.myapplication.favoritemeal.view.FavMealFragment.WHOLE_OBJ;
 import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +34,8 @@ import com.example.myapplication.inspirationmeal.presenter.RandomMealPresenter;
 import java.util.List;
 
 public class RandomMealFragment extends Fragment implements IView {
-    public final static String MEAL_OBJECT="Random_Meal";
-    ImageView randImg, hrtIcon;
+    ImageView randImg;
+    ImageButton hrtIcon, addIcon;
     TextView nameTxt, categoryTxt,countryTxt;
     CardView card;
     boolean isFavorite = false;
@@ -71,8 +73,8 @@ public class RandomMealFragment extends Fragment implements IView {
         randImg = view.findViewById(R.id.rMealThumb);
         categoryTxt = view.findViewById(R.id.categoryTxt);
         countryTxt = view.findViewById(R.id.areaTxt);
-        card = view.findViewById(R.id.cardSearchView);
-
+        card = view.findViewById(R.id.cardCalendarView);
+        addIcon = view.findViewById(R.id.addCalendarBtn);
         FragmentManager manager = getParentFragmentManager();
 
         presenter.requestData();
@@ -98,12 +100,17 @@ public class RandomMealFragment extends Fragment implements IView {
             @Override
             public void onClick(View view) {
                 Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-                outIntent.putExtra(MEAL_ID, _Random_meal.get(0).getIdMeal());
+                outIntent.putExtra(WHOLE_OBJ, _Random_meal.get(0));
                 startActivity(outIntent);
             }
         });
 
-
+        addIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Add to Calender", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
