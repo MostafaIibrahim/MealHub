@@ -39,9 +39,7 @@ public class SearchPresenter implements MealNetworkCallBack, CategroyNetworkCall
         repository.getMealByNameNetworkCallBack(query,this);
     }
 
-    public void searchByCategory(String query) {
-        System.out.println("I am searching by category");
-        repository.getMealsByCategoryNetworkCallBack(query,this);}
+    public void searchByCategory(String query) { repository.getMealsByCategoryNetworkCallBack(query,this);}
 
     public void searchByIngredient(String query) { repository.getMealsByIngredientNetworkCallBack(query,this);}
 

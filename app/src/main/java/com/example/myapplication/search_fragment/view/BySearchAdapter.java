@@ -1,6 +1,9 @@
 package com.example.myapplication.search_fragment.view;
 
+import static com.example.myapplication.meal_list_activity.view.MealListAdapter.MEAL_ID;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
+import com.example.myapplication.details_activity.view.DetailsMealActivity;
 import com.example.myapplication.model_app.Meal;
+import com.example.myapplication.search_fragment.presenter.SearchPresenter;
 
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class BySearchAdapter extends RecyclerView.Adapter<BySearchAdapter.ViewHolder> {
     private final Context context;
     private List<Meal> meals;
     private static final String TAG = "search Adapter RecycleView";
-
-    public SearchAdapter(Context context) {
+    SearchPresenter presenter;
+    public BySearchAdapter(Context context , SearchPresenter presenter) {
+        this.presenter = presenter;
         this.context = context;
     }
 
@@ -32,25 +38,23 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @NonNull
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BySearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View v = inflater.inflate(R.layout.adapter_search_result, parent, false);
-        SearchAdapter.ViewHolder vh = new SearchAdapter.ViewHolder(v);
+        BySearchAdapter.ViewHolder vh = new BySearchAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BySearchAdapter.ViewHolder holder, int position) {
         holder.name.setText(meals.get(position).getStrMeal());
         Glide.with(context).load(meals.get(position).getStrMealThumb())
-                .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).circleCrop()
+                .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).centerCrop()
                 .into(holder.thumbnail);
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Here I want to enter either it was by name or something else I want always to be able to get details
-
-            }
+        holder.card.setOnClickListener((view) -> {
+            Intent toDetails = new Intent(context, DetailsMealActivity.class);
+            toDetails.putExtra(MEAL_ID, meals.get(position).getIdMeal());
+            context.startActivity(toDetails);
         });
     }
 

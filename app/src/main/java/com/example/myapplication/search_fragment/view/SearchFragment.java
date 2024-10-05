@@ -45,12 +45,10 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     CountryAdapter countryAdapter;
     CategoryAdapter categoryAdapter;
     IngredientAdapter ingredientAdapter;
-    SearchAdapter searchAdapter;
+    BySearchAdapter bySearchAdapter;
     public SearchFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +63,14 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeView(view);
+        presenter = new SearchPresenter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
+        setupRecyclerViews();
+        setupListener();
+        loadInitialData();
+    }
+
+    private void initializeView(View view){
         searchBar = view.findViewById(R.id.searchView);
         countryRcy = view.findViewById(R.id.searchCountriesRecylerView);
         ingredientsRcy = view.findViewById(R.id.ingredientsRecyclerView);
@@ -76,33 +82,39 @@ public class SearchFragment extends Fragment implements IViewSearch  {
         radioIngredient = view.findViewById(R.id.radioIngredient);
         searchRcy = view.findViewById(R.id.search_results_recyclerview);
         linearLayout = view.findViewById(R.id.linearLayoutListBy);
-        presenter = new SearchPresenter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
+    }
 
-        presenter.requestCategoryData();
-        presenter.requestCountryData();
-        presenter.requestIngredientData();
+    private void setupRecyclerViews() {
+        setupRecyclerView(countryRcy, new GridLayoutManager(getContext(), 2, RecyclerView.HORIZONTAL, false));
+        setupRecyclerView(ingredientsRcy, new GridLayoutManager(getContext(), 4, RecyclerView.HORIZONTAL, false));
+        setupRecyclerView(getCategoryRcy, new GridLayoutManager(getContext(), 2, RecyclerView.HORIZONTAL, false));
+        setupRecyclerView(searchRcy, new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
+        countryAdapter = new CountryAdapter(getContext(), presenter);
+        categoryAdapter = new CategoryAdapter(getContext());
+        ingredientAdapter = new IngredientAdapter(getContext());
+        bySearchAdapter = new BySearchAdapter(getContext(),presenter);
+    }
 
-        countryAttachToAdapter();
-        categoryAttachToAdapter();
-        ingredientAttachToAdapter();
-        searchResultAttachToAdapter();
+    private void setupRecyclerView(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+    }
 
+    private void setupListener(){
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
                 searchRcy.setVisibility(View.VISIBLE);
                 performSearch(s);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
                 if (!s.isEmpty()) {
                     linearLayout.setVisibility(View.GONE);
                     searchRcy.setVisibility(View.VISIBLE);
-                    presenter.searchMealByLetter(s);
+                    performSearch(s);
                 } else {
                     searchRcy.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.VISIBLE);
@@ -110,104 +122,65 @@ public class SearchFragment extends Fragment implements IViewSearch  {
                 return false;
             }
         });
-
-        filterRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i){
-                    case FILTER_BY_NAME:
-                        currentFilter = FILTER_BY_NAME;
-                        break;
-                    case FILTER_BY_CATEGORY:
-                        currentFilter = FILTER_BY_CATEGORY;
-                        break;
-                    case FILTER_BY_INGREDIENT:
-                        currentFilter = FILTER_BY_INGREDIENT;
-                        break;
-                }
-            }
+        filterRadioGroup.setOnCheckedChangeListener( (RadioGroup radioGroup, int id) -> {
+                if(id == R.id.radioName){ currentFilter = FILTER_BY_NAME; }
+                else if(id == R.id.radioIngredient){ currentFilter = FILTER_BY_INGREDIENT; }
+                else if(id == R.id.radioCategory){ currentFilter = FILTER_BY_CATEGORY; }
         });
     }
     private void performSearch(String query){
         switch (currentFilter) {
-            case FILTER_BY_NAME:
-                presenter.searchByName(query);
-                break;
-            case FILTER_BY_CATEGORY:
-                presenter.searchByCategory(query);
-                break;
-            case FILTER_BY_INGREDIENT:
-                presenter.searchByIngredient(query);
-                break;
+            case FILTER_BY_NAME: presenter.searchByName(query); break;
+            case FILTER_BY_CATEGORY: presenter.searchByCategory(query); break;
+            case FILTER_BY_INGREDIENT: presenter.searchByIngredient(query); break;
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
+    private void loadInitialData(){
+        presenter.requestCategoryData();
+        presenter.requestCountryData();
+        presenter.requestIngredientData();
     }
-
-    void categoryAttachToAdapter(){
-        getCategoryRcy.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        getCategoryRcy.setLayoutManager(layoutManager);
-        categoryAdapter = new CategoryAdapter(getContext());
-    }
-    void searchResultAttachToAdapter(){
-        searchRcy.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        searchRcy.setLayoutManager(layoutManager);
-        searchAdapter = new SearchAdapter(getContext());
-    }
-    void ingredientAttachToAdapter(){
-        ingredientsRcy.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        ingredientsRcy.setLayoutManager(layoutManager);
-        ingredientAdapter = new IngredientAdapter(getContext());
-    }
-
-    void countryAttachToAdapter(){
-        countryRcy.setHasFixedSize(true);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        countryRcy.setLayoutManager(layoutManager);
-        countryAdapter = new CountryAdapter(getContext(),presenter);
-    }
-
 
     @Override
     public void getCategoryMeals(List<CategoryMeal> categoryMeals) {
-//        Toast.makeText(getContext(), "Category data is here and presenter successed", Toast.LENGTH_SHORT).show();
-        getCategoryRcy.setAdapter(categoryAdapter);
-        categoryAdapter.updateMeals(categoryMeals);
-        categoryAdapter.notifyDataSetChanged();
+        if(categoryMeals != null){
+            getCategoryRcy.setAdapter(categoryAdapter);
+            categoryAdapter.updateMeals(categoryMeals);
+            categoryAdapter.notifyDataSetChanged();
+        }else {
+//            Toast.makeText(getContext(), "Not Found", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void getMealsBySearch(List<Meal> meals) {
-        Toast.makeText(getContext(), meals.get(0).getStrMeal(), Toast.LENGTH_SHORT).show();
-        searchRcy.setAdapter(searchAdapter);
-        searchAdapter.updateMeals(meals);
-        searchAdapter.notifyDataSetChanged();
+        if(meals != null){
+            searchRcy.setAdapter(bySearchAdapter);
+            bySearchAdapter.updateMeals(meals);
+            bySearchAdapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void getIngredients(List<IngredientMeal> ingredients) {
-        ingredientsRcy.setAdapter(ingredientAdapter);
-        ingredientAdapter.updateMeals(ingredients);
-        ingredientAdapter.notifyDataSetChanged();
+        if (ingredients != null){
+            ingredientsRcy.setAdapter(ingredientAdapter);
+            ingredientAdapter.updateMeals(ingredients);
+            ingredientAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void getCountries(List<CountryMeal> country) {
-        countryRcy.setAdapter(countryAdapter);
-        countryAdapter.setCountries(country);
-        countryAdapter.notifyDataSetChanged();
+        if(country != null){
+            countryRcy.setAdapter(countryAdapter);
+            countryAdapter.setCountries(country);
+            countryAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

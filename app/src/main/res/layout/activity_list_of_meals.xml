@@ -5,16 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F1F1"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context="com.example.myapplication.meal_list_activity.view.ListOfMeals">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listMealRcycView"
         android:layout_width="match_parent"
-        android:layout_height="710dp"
-        android:layout_marginBottom="515dp"
-        android:background="#F8E6E6"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:background="#FFFFFF"
         android:paddingLeft="20dp"
         android:paddingRight="20dp" />
 </LinearLayout>

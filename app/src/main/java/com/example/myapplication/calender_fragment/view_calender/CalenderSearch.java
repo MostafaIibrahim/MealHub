@@ -58,17 +58,12 @@ public class CalenderSearch extends Fragment implements IViewCalendar {
         clndrView = view.findViewById(R.id.calendarView2);
         fab = view.findViewById(R.id.addMealFab);
         presenter = new CalendarPresenter(this,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance( getContext() ),MealRemoteDataSourceImp.getInstance()));
-
-        calenderRcyView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        calenderRcyView.setLayoutManager(layoutManager);
-        adapter = new CalenderMealItemAdapter(getContext(), MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
-        calenderRcyView.setAdapter(adapter);
-
+        setupRecyclerView();
+        setupListeners();
+    }
+    private void setupListeners(){
         clndrView.setOnDateChangeListener( (@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) -> {
             String date = dayOfMonth + "-" + (month+1) + "-" + year;
-
             presenter.getPlannedMealsOfTheDay(date).observe(getViewLifecycleOwner(),mealList -> {
                 if (mealList == null || mealList.isEmpty()) {
                     Toast.makeText(getContext(), "No Meals for this day", Toast.LENGTH_SHORT).show();
@@ -98,6 +93,15 @@ public class CalenderSearch extends Fragment implements IViewCalendar {
                 popupMenu.show();
             }
         });
+    }
+    private void setupRecyclerView(){
+        calenderRcyView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        calenderRcyView.setLayoutManager(layoutManager);
+        adapter = new CalenderMealItemAdapter(getContext(), MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
+        calenderRcyView.setAdapter(adapter);
+
     }
     private void gotoFrag(Fragment fragment){
         FragmentManager fragmentManager = getParentFragmentManager();

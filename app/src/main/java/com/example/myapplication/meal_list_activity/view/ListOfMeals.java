@@ -38,15 +38,16 @@ public class ListOfMeals extends AppCompatActivity implements IViewListOfMeals {
         recyclerMealList = findViewById(R.id.listMealRcycView);
         presenter = new MealListPresenter(this,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this),MealRemoteDataSourceImp.getInstance()));
         getIntentObj();
+        setupRecyclerView();
+        //Check on the coming intent
+    }
+    private void setupRecyclerView(){
         recyclerMealList.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerMealList.setLayoutManager(layoutManager);
         adapter = new MealListAdapter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this), MealRemoteDataSourceImp.getInstance()));
         recyclerMealList.setAdapter(adapter);
-        //Check on the coming intent
-
-
     }
     void getIntentObj(){
         Intent recievedIntent = getIntent();
@@ -68,7 +69,7 @@ public class ListOfMeals extends AppCompatActivity implements IViewListOfMeals {
 
     @Override
     public void getMealsBySearch(List<Meal> meals) {
-        if (meals != null && !meals.isEmpty()) {
+        if (meals != null) {
             adapter.updateMeals(meals);
             adapter.notifyDataSetChanged();
         }
