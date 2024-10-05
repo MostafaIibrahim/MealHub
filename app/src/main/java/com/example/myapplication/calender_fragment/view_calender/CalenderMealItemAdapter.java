@@ -39,7 +39,9 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
     public void updateMeals(List<WeeklyMealPlan> meals) {
         this.meals = meals;
     }
-
+    public void clearMeals(){
+        meals.clear();
+    }
     @NonNull
     @Override
     public CalenderMealItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,20 +53,25 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
 
     @Override
     public void onBindViewHolder(@NonNull CalenderMealItemAdapter.ViewHolder holder, int position) {
-        holder.mealTitle.setText(meals.get(position).getStrMeal());
-        Glide.with(context).load(meals.get(position).getStrMealThumb())
-                .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).centerCrop()
-                .into(holder.mealImg);
-        holder.rmvBtn.setOnClickListener(view -> {
-            Toast.makeText(context, "The meal is deleted from Calender", Toast.LENGTH_SHORT).show();
-            repo.deletePlannedMeal(meals.get(position));
-        });
-        holder.mealCrd.setOnClickListener(view -> {
-            Intent toDetails = new Intent(context, DetailsMealActivity.class);
-            //I need to send the whole object to the detailed meals
-            toDetails.putExtra(WHOLE_OBJ, convertToMeal(meals.get(position)));
-            context.startActivity(toDetails);
-        });
+        if(meals != null){
+            holder.mealTitle.setText(meals.get(position).getStrMeal());
+            Glide.with(context).load(meals.get(position).getStrMealThumb())
+                    .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).centerCrop()
+                    .into(holder.mealImg);
+            holder.rmvBtn.setOnClickListener(view -> {
+                Toast.makeText(context, "The meal is deleted from Calender", Toast.LENGTH_SHORT).show();
+                repo.deletePlannedMeal(meals.get(position));
+            });
+            holder.mealCrd.setOnClickListener(view -> {
+                Intent toDetails = new Intent(context, DetailsMealActivity.class);
+                //I need to send the whole object to the detailed meals
+                toDetails.putExtra(WHOLE_OBJ, convertToMeal(meals.get(position)));
+                context.startActivity(toDetails);
+            });
+        }else{
+            holder.mealTitle.setText("Not Founded Meals for Today");
+        }
+
     }
 
     @Override

@@ -75,6 +75,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())  // Default selection: today
                 .build();
         //Add listener on the add btn so when it's pressed it shows up the calendar
+
         addPlanBtn.setOnClickListener( v -> {
             datePicker.show(getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
         });
@@ -143,7 +144,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
     public void onFailureResult(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-    public WeeklyMealPlan convertToWeeklyPlan(Meal objMeal) {
+    public static WeeklyMealPlan convertToWeeklyPlan(Meal objMeal) {
         // Create an instance of WeeklyMealPlan
         WeeklyMealPlan mealPlan = new WeeklyMealPlan();
 

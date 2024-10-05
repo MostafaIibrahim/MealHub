@@ -34,8 +34,12 @@ import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
 import com.example.myapplication.favorite_fragment.view.FavMealFragment;
 import com.example.myapplication.model_app.MealRemoteDataSourceImp;
 import com.example.myapplication.home_fragment.presenter.HomeScreenPresenter;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class HomeScreenFragment extends Fragment implements IView {
@@ -51,6 +55,7 @@ public class HomeScreenFragment extends Fragment implements IView {
     RecyclerView spinnerRcylerView, breakFastRecycler;
     SpinnerItemAdapter spinnerAdapter;
     MealModetemAdapter mealModeAdapter;
+    MaterialDatePicker<Long> datePicker;
     public HomeScreenFragment() {
         // Required empty public constructor
         super(R.layout.fragment_random_meal);
@@ -79,9 +84,13 @@ public class HomeScreenFragment extends Fragment implements IView {
         setupCountrySpinner();
         setupHeartBtn();
         setupCardClick();
-        setupAddToCalendarBtn();
         setupSpinnerMealMode();
         presenter.requestData();
+        datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date for your Meal")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())  // Default selection: today
+                .build();
+        setupAddToCalendarBtn();
     }
     private void initializeViews(View view){
         nameTxt = view.findViewById(R.id.rmTitle);
@@ -184,7 +193,17 @@ public class HomeScreenFragment extends Fragment implements IView {
     }
     private void setupAddToCalendarBtn(){
         addIcon.setOnClickListener(view ->{
-                Toast.makeText(getContext(), "Add to Calender", Toast.LENGTH_SHORT).show();
+                datePicker.show(getParentFragmentManager(), "MATERIAL_DATE_PICKER");
+            });
+            //Handle Selected Data
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                // Convert the selected date in milliseconds to a readable format
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                String selectedDate = sdf.format(new Date(selection));
+                if(_Random_meal != null){
+                    presenter.insertRequest(DetailsMealActivity.convertToWeeklyPlan(( _Random_meal.get(0))), selectedDate);
+                    Toast.makeText(getContext(), _Random_meal.get(0).getStrMeal() +" is added to "+selectedDate, Toast.LENGTH_SHORT).show();
+                }
         });
     }
     private void getDinner(){

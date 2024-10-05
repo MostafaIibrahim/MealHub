@@ -22,7 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.MealHub.databinding.ActivityHomeScreenBinding;
 
 public class home_screen extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
     private Button connect;
     ActivityHomeScreenBinding binding;
@@ -42,9 +42,11 @@ public class home_screen extends AppCompatActivity {
         if (isConnectedToNetwork()) {
             Toast.makeText(this, "Connected to Network", Toast.LENGTH_SHORT).show();
             replaceFragment(new HomeScreenFragment());
+            bottomNavigationView.setSelectedItemId(R.id.navHome);
         } else {
             Toast.makeText(this, "You need to connect to Network", Toast.LENGTH_SHORT).show();
             replaceFragment(new FavMealFragment());
+            bottomNavigationView.setSelectedItemId(R.id.navFav);
         }
     }
     public void replaceFragment(Fragment fragment){

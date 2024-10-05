@@ -2,6 +2,7 @@ package com.example.myapplication.home_fragment.presenter;
 
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepository;
+import com.example.myapplication.model_app.WeeklyMealPlan;
 import com.example.myapplication.model_app.category.CategoryMeal;
 import com.example.myapplication.model_app.country_model.CountryMeal;
 import com.example.myapplication.model_app.utility.CategroyNetworkCallBack;
@@ -27,6 +28,10 @@ public class HomeScreenPresenter implements MealNetworkCallBack , CountryNetwork
         repository.getMealByCountryNetworkCallBack(country,this);}
     public void searchByCategory(String query) {
         repository.getMealsByCategoryNetworkCallBack(query,this);}
+    public void insertRequest(WeeklyMealPlan meal, String date){
+        meal.setMealDate(date);
+        repository.insertPlannedMeal(meal);
+    }
     @Override
     public void mealResponseOnSuccessful(List<Meal> meals) {
         view.getRandomMeal(meals);
