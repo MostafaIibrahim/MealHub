@@ -78,7 +78,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
-            linearLayout = layout.findViewById(R.id.item_area);
+            linearLayout = layout.findViewById(R.id.breakfastArea);
             name = layout.findViewById(R.id.ingredientLabel);
             thumbnail = layout.findViewById(R.id.ingredientThumbnail);
         }

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,13 +49,12 @@ public class HomeScreenFragment extends Fragment implements IView {
     List<Meal> _Random_meal;
     FavMealFragment favMealFragment;
     Spinner countrySpinner;
-    RecyclerView spinnerRcylerView;
+    RecyclerView spinnerRcylerView, breakFastRecycler;
     SpinnerItemAdapter spinnerAdapter;
+    BreakFastItemAdapter BreakFastAdapter;
     public HomeScreenFragment() {
         // Required empty public constructor
         super(R.layout.fragment_random_meal);
-        System.out.println("I am in Constructor");
-
     }
 
     @Override
@@ -68,13 +68,23 @@ public class HomeScreenFragment extends Fragment implements IView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_random_meal, container, false);
         presenter = new HomeScreenPresenter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeViews(view);
+        setupSpinnerRecyclerView();
+        setupBreakFastRecyclerView();
+        setupCountrySpinner();
+        setupHeartBtn();
+        setupCardClick();
+        setupAddToCalendarBtn();
+        presenter.requestData();
+        FragmentManager manager = getParentFragmentManager();
+    }
+    private void initializeViews(View view){
         nameTxt = view.findViewById(R.id.rmTitle);
         hrtIcon = view.findViewById(R.id.heartIcon);
         randImg = view.findViewById(R.id.rMealThumb);
@@ -84,65 +94,40 @@ public class HomeScreenFragment extends Fragment implements IView {
         addIcon = view.findViewById(R.id.addCalendarBtn);
         countrySpinner = view.findViewById(R.id.countrySpinner);
         spinnerRcylerView = view.findViewById(R.id.spinnerRecyclerView);
-        FragmentManager manager = getParentFragmentManager();
-        spinnerRecylerView();
-        presenter.requestData();
-        countryChooser();
-        hrtIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isFavorite = !isFavorite;
-                if (isFavorite){
-                    hrtIcon.setImageResource(R.drawable.baseline_bookmark_added_24);
-                    presenter.addMeal(_Random_meal.get(0));
-                    Toast.makeText(getContext(), "The meal is added to favorite", Toast.LENGTH_SHORT).show();
-//                    hrtIcon.setColorFilter(getResources().getColor(com.google.android.material.R.color.error_color_material_light));
-                }else{
-                    hrtIcon.setImageResource(R.drawable.baseline_bookmark_border_24);
-                    presenter.rmvMeal(_Random_meal.get(0));
-                    Toast.makeText(getContext(), "The meal is removed from favorite", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-                outIntent.putExtra(WHOLE_OBJ, _Random_meal.get(0));
-                startActivity(outIntent);
-            }
-        });
-
-        addIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Add to Calender", Toast.LENGTH_SHORT).show();
-            }
-        });
+        breakFastRecycler = view.findViewById(R.id.BreakfastRecyclerView);
     }
-    void spinnerRecylerView(){
+    private void setupSpinnerRecyclerView(){
         spinnerRcylerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         spinnerRcylerView.setLayoutManager(layoutManager);
         spinnerAdapter = new SpinnerItemAdapter(getContext(),presenter);
     }
-    void countryChooser(){
+    private void setupBreakFastRecyclerView(){
+        breakFastRecycler.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        breakFastRecycler.setLayoutManager(layoutManager);
+        BreakFastAdapter = new BreakFastItemAdapter(getContext(),presenter);
+    }
+    private void setupCountrySpinner(){
         Random random = new Random();
         String[] countries = {"Select a country...","American", "British", "Canadian", "Chinese", "Croatian", "Dutch", "Egyptian",
                 "Filipino", "French", "Greek", "Indian", "Irish", "Italian", "Jamaican", "Japanese",
                 "Kenyan", "Malaysian", "Mexican", "Moroccan", "Polish", "Portuguese", "Russian",
                 "Spanish", "Thai", "Tunisian", "Turkish", "Ukrainian", "Vietnamese"};
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,countries);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        countrySpinner.setAdapter(adapter);
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                String item = adapterView.getItemAtPosition(position).toString();
-                if(item != "Select a country..."){
-                    presenter.searchByCountry(item);
-                    Toast.makeText(getContext(), "Pich up a meal from "+ item+" Kitchen,Enjoy!", Toast.LENGTH_SHORT).show();
+                String selectedCountry = adapterView.getItemAtPosition(position).toString();
+                if(selectedCountry != "Select a country..."){
+                    presenter.searchByCountry(selectedCountry);
+                    Toast.makeText(getContext(), "Pich up a meal from "+ selectedCountry+" Kitchen,Enjoy!", Toast.LENGTH_SHORT).show();
                 }else{
-                    presenter.searchByCountry(countries[random.nextInt(14)]);
+                    presenter.searchByCountry(countries[random.nextInt(countries.length)]);
                 }
             }
             @Override
@@ -150,21 +135,38 @@ public class HomeScreenFragment extends Fragment implements IView {
                 Toast.makeText(getContext(), "Nothing selected", Toast.LENGTH_SHORT).show();
             }
         });
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,countries);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        countrySpinner.setAdapter(adapter);
     }
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void setupHeartBtn(){
+        hrtIcon.setOnClickListener(view -> {
+                isFavorite = !isFavorite;
+                if(! (_Random_meal.isEmpty())){
+                    if (isFavorite){
+                        hrtIcon.setImageResource(R.drawable.baseline_favorite_24);
+                        presenter.addMeal(_Random_meal.get(0));
+                        Toast.makeText(getContext(), "The meal is added to favorite", Toast.LENGTH_SHORT).show();
+//                    hrtIcon.setColorFilter(getResources().getColor(com.google.android.material.R.color.error_color_material_light));
+                    }else{
+                        hrtIcon.setImageResource(R.drawable.baseline_favorite_border_24);
+                        presenter.rmvMeal(_Random_meal.get(0));
+                        Toast.makeText(getContext(), "The meal is removed from favorite", Toast.LENGTH_SHORT).show();
+                    }
+                }else{ Toast.makeText(getContext(), "No internet Connection", Toast.LENGTH_SHORT).show(); }
+        });
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    private void setupCardClick(){
+        card.setOnClickListener( view ->{
+                if(_Random_meal.isEmpty()){
+                    Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
+                    outIntent.putExtra(WHOLE_OBJ, _Random_meal.get(0));
+                    startActivity(outIntent);
+                }else{ Toast.makeText(getContext(), "No internet Connection", Toast.LENGTH_SHORT).show(); }
+        });
     }
-
+    private void setupAddToCalendarBtn(){
+        addIcon.setOnClickListener(view ->{
+                Toast.makeText(getContext(), "Add to Calender", Toast.LENGTH_SHORT).show();
+        });
+    }
     @Override
     public void getRandomMeal(List<Meal> meal) {
         if (meal != null && isAdded()) {

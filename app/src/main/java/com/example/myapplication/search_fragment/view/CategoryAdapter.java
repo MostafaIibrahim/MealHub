@@ -71,7 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public ViewHolder(View itemView){
             super(itemView);
             layout = itemView;
-            linearLayout = layout.findViewById(R.id.item_area);
+            linearLayout = layout.findViewById(R.id.breakfastArea);
             name = layout.findViewById(R.id.listCategoryLabel);
             thumbnail = layout.findViewById(R.id.listCategoryThumbnail);
         }

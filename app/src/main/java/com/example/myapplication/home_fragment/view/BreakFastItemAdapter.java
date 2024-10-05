@@ -19,13 +19,13 @@ import com.example.myapplication.model_app.Meal;
 
 import java.util.List;
 
-public class SpinnerItemAdapter extends RecyclerView.Adapter<SpinnerItemAdapter.ViewHolder> {
+public class BreakFastItemAdapter extends RecyclerView.Adapter<BreakFastItemAdapter.ViewHolder> {
     private final Context context;
     private List<Meal> meals;
     private static final String TAG = "Category Adapter RecycleView";
     HomeScreenPresenter presenter;
     public static final String MEAL_ID = "meal_id";
-    public SpinnerItemAdapter(Context context, HomeScreenPresenter presenter) {
+    public BreakFastItemAdapter(Context context, HomeScreenPresenter presenter) {
         this.context = context;
         this.presenter = presenter;
     }
@@ -36,24 +36,19 @@ public class SpinnerItemAdapter extends RecyclerView.Adapter<SpinnerItemAdapter.
 
     @NonNull
     @Override
-    public SpinnerItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BreakFastItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.adapter_spinner_item, parent, false);
-        SpinnerItemAdapter.ViewHolder vh = new SpinnerItemAdapter.ViewHolder(v);
+        View v = inflater.inflate(R.layout.adapter_breakfast_item, parent, false);
+        BreakFastItemAdapter.ViewHolder vh = new BreakFastItemAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SpinnerItemAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BreakFastItemAdapter.ViewHolder holder, int position) {
         holder.mealTitle.setText(meals.get(position).getStrMeal());
         Glide.with(context).load(meals.get(position).getStrMealThumb())
                 .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).circleCrop()
                 .into(holder.mealImg);
-        /*holder.favBtn.setOnClickListener(view -> {
-            Toast.makeText(context, "The meal is added to favorite", Toast.LENGTH_SHORT).show();
-            presenter.addMeal(meals.get(position));
-
-        });*/
         holder.mealImg.setOnClickListener(view -> {
             Intent toDetails = new Intent(context, DetailsMealActivity.class);
             //I need to send the whole object to the detailed meals
@@ -70,17 +65,13 @@ public class SpinnerItemAdapter extends RecyclerView.Adapter<SpinnerItemAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        CardView mealCrd;
         ImageView mealImg;
         TextView mealTitle;
-        //ImageButton favBtn;
         public View layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             layout = itemView;
-//            mealCrd = layout.findViewById(R.id.spinnerCardItem);
-            //favBtn = layout.findViewById(R.id.spinnerHrtIcon);
             mealTitle = layout.findViewById(R.id.breafastTitle);
             mealImg = layout.findViewById(R.id.breakFastThumbnail);
         }

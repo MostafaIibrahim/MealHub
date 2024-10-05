@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/GreetingII"
         android:textAlignment="center"
@@ -71,68 +71,49 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:text="Try Something new today!"
+                android:textColor="#1A3A6E"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardCalendarView"
                 android:layout_width="match_parent"
-                android:layout_height="237dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="#FFFFFF"
-                app:cardCornerRadius="25dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="187dp">
 
                     <ImageView
                         android:id="@+id/rMealThumb"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:scaleX="1.5"
-                        android:scaleY="1"
-                        android:src="@drawable/ic_launcher_background"
-                        android:translationX="0dp"
-                        android:translationY="0dp" />
-
-                    <ImageButton
-                        android:id="@+id/heartIcon"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:backgroundTint="#FFFFFF"
-                        android:contentDescription="Add to Favorites"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/baseline_bookmark_border_24"
-                        android:translationX="-20dp"
-                        app:tint="#161616" />
-
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_launcher_background" />
                     <View
                         android:id="@+id/view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/scrim"
                         android:padding="16dp" />
-
                     <TextView
                         android:id="@+id/rmTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:gravity="bottom"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="45dp"
                         android:textColor="#EDF5FF"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:translationX="20dp"
-                        android:translationY="-35dp"
                         tools:text="The name of the meal" />
 
                     <TextView
@@ -140,49 +121,74 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="#EDF5FF"
                         android:textSize="14sp"
-                        android:textStyle="normal"
-                        android:translationX="20dp"
-                        android:translationY="-20dp"
-                        tools:text="category" />
+                        tools:text="Category" />
 
                     <TextView
                         android:id="@+id/areaTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="#EDF5FF"
                         android:textSize="14sp"
-                        android:textStyle="normal"
-                        android:translationX="100dp"
-                        android:translationY="-20dp"
-                        tools:text="country" />
+                        tools:text="Country" />
 
                     <ImageButton
                         android:id="@+id/addCalendarBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|right"
-                        android:foregroundGravity="bottom|right"
-                        android:src="@drawable/baseline_add_24"
-                        android:translationX="-20dp"
-                        android:translationY="-20dp" />
-
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/baseline_add_24" />
+                    <!-- Heart Icon to Favorite the meal -->
+                    <ImageButton
+                        android:id="@+id/heartIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="70dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/baseline_favorite_border_24" />
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Breakfast Recipes"
+                    android:textColor="#1A3A6E"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/BreakfastRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:gravity="center_vertical">
+
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="sans-serif-medium"
                     android:text="Choose a country dish to try today!"
+                    android:textColor="#1A3A6E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -190,18 +196,17 @@
                     android:id="@+id/countrySpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
                     android:background="@drawable/rounded_background"
                     android:backgroundTint="#A1BBE6" />
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spinnerRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:paddingLeft="10dp"
-                android:clipToPadding="false" />
+                android:paddingTop="10dp" />
 
         </LinearLayout>
     </ScrollView>
