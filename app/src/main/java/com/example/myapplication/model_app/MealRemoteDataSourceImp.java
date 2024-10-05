@@ -115,12 +115,12 @@ public class MealRemoteDataSourceImp implements MealRemoteDataSource {
         });
     }
     @Override
-    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack){
+    public void getMealByCountryNetworkCallBack(String country, CountryNetworkCallBack mealNetworkCallBack){
         serviceCall.searchMealsByCountry(country).enqueue(new Callback<MealApiResponse<Meal>>() {
             @Override
             public void onResponse(Call<MealApiResponse<Meal>> call, Response<MealApiResponse<Meal>> response) {
                 Log.i(TAG, "onResponse: Successed");
-                mealNetworkCallBack.mealResponseOnSuccessful(response.body().meals);
+                mealNetworkCallBack.getMealByCountryResponseOnSuccessful(response.body().meals);
 
             }
 

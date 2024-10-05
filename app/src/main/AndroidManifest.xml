@@ -19,7 +19,7 @@
             android:name="com.example.myapplication.meal_list_activity.view.ListOfMeals"
             android:exported="false" />
         <activity
-            android:name="com.example.myapplication.details_meal.view.DetailsMealActivity"
+            android:name="com.example.myapplication.details_activity.view.DetailsMealActivity"
             android:exported="false" />
         <activity
             android:name="com.example.myapplication.home_screen.home_view.home_screen"

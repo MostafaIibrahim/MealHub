@@ -1,7 +1,5 @@
 package com.example.myapplication.meal_list_activity.view;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
-import com.example.myapplication.details_meal.view.DetailsMealActivity;
-import com.example.myapplication.home_screen.home_view.home_screen;
+import com.example.myapplication.details_activity.view.DetailsMealActivity;
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepository;
-import com.example.myapplication.model_app.category.CategoryMeal;
-import com.example.myapplication.search_screen.view.CategoryAdapter;
-import com.example.myapplication.splash_screen_view.MainActivity;
 
 import java.util.List;
 

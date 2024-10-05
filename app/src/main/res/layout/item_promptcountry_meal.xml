@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/spinnerCardItem"
+        android:layout_width="413dp"
+        android:layout_height="337dp"
+        android:layout_marginTop="-20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/spinnerThumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"
+                android:scaleType="centerCrop"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="45dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/spinnerHrtIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="10dp"
+                android:layout_marginTop="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:backgroundTint="#FFFFFF"
+                android:contentDescription="Add to Favorites"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_bookmark_border_24"
+                android:translationX="-20dp"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerThumbnail"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#161616" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/scrim"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/spinnerMealTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#EDF5FF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:translationX="20dp"
+                android:translationY="-35dp"
+                app:layout_constraintBottom_toBottomOf="@+id/spinnerThumbnail"
+                app:layout_constraintEnd_toEndOf="@+id/spinnerThumbnail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="The name of the meal" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

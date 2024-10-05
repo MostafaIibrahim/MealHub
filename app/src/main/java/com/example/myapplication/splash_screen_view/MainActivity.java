@@ -3,19 +3,12 @@ package com.example.myapplication.splash_screen_view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.MealHub.R;
-import com.example.myapplication.favoritemeal.view.FavMealFragment;
 import com.example.myapplication.home_screen.home_view.home_screen;
-import com.example.myapplication.inspirationmeal.view.RandomMealFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {

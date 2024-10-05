@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.example.myapplication.search_screen.view.SearchFragment">
+    tools:context="com.example.myapplication.search_fragment.view.SearchFragment">
 
     <ScrollView
         android:id="@+id/searchScrollView"

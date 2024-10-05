@@ -1,19 +1,19 @@
 package com.example.myapplication.meal_list_activity.view;
 
-import static com.example.myapplication.search_screen.view.CategoryAdapter.CATEGORY_NAME;
-import static com.example.myapplication.search_screen.view.CountryAdapter.COUNTRY_NAME;
-import static com.example.myapplication.search_screen.view.IngredientAdapter.Ingredient_NAME;
+import static com.example.myapplication.search_fragment.view.CategoryAdapter.CATEGORY_NAME;
+import static com.example.myapplication.search_fragment.view.CountryAdapter.COUNTRY_NAME;
+import static com.example.myapplication.search_fragment.view.IngredientAdapter.Ingredient_NAME;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.MealHub.R;
+import com.example.myapplication.meal_list_activity.presenter.MealListPresenter;
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRemoteDataSourceImp;
 import com.example.myapplication.model_app.MealRepositoryImp;
@@ -21,22 +21,22 @@ import com.example.myapplication.model_app.category.CategoryMeal;
 import com.example.myapplication.model_app.country_model.CountryMeal;
 import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
 import com.example.myapplication.model_app.ingreident.IngredientMeal;
-import com.example.myapplication.search_screen.presenter.SearchPresenter;
-import com.example.myapplication.search_screen.view.IViewSearch;
+import com.example.myapplication.search_fragment.presenter.SearchPresenter;
+import com.example.myapplication.search_fragment.view.IViewSearch;
 
 import java.util.List;
 
-public class ListOfMeals extends AppCompatActivity implements IViewSearch {
+public class ListOfMeals extends AppCompatActivity implements IViewListOfMeals {
     RecyclerView recyclerMealList;
     MealListAdapter adapter;
     String receivedObj;
-    SearchPresenter presenter;
+    MealListPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_meals);
         recyclerMealList = findViewById(R.id.listMealRcycView);
-        presenter = new SearchPresenter(this,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this),MealRemoteDataSourceImp.getInstance()));
+        presenter = new MealListPresenter(this,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this),MealRemoteDataSourceImp.getInstance()));
         getIntentObj();
         recyclerMealList.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -64,20 +64,6 @@ public class ListOfMeals extends AppCompatActivity implements IViewSearch {
         }else{
             System.out.println("Intent = null");
         }
-    }
-    @Override
-    public void getCountries(List<CountryMeal> country) {
-
-    }
-
-    @Override
-    public void getIngredients(List<IngredientMeal> ingredients) {
-
-    }
-
-    @Override
-    public void getCategoryMeals(List<CategoryMeal> categoryMeals) {
-
     }
 
     @Override

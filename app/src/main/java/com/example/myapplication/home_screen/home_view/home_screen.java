@@ -1,11 +1,9 @@
 package com.example.myapplication.home_screen.home_view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -16,11 +14,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.MealHub.R;
-import com.example.myapplication.calender_screen.view_calender.CalenderSearch;
-import com.example.myapplication.details_meal.view.DetailsMealActivity;
-import com.example.myapplication.favoritemeal.view.FavMealFragment;
-import com.example.myapplication.inspirationmeal.view.RandomMealFragment;
-import com.example.myapplication.search_screen.view.SearchFragment;
+import com.example.myapplication.calender_fragment.view_calender.CalenderSearch;
+import com.example.myapplication.favorite_fragment.view.FavMealFragment;
+import com.example.myapplication.home_fragment.view.HomeScreenFragment;
+import com.example.myapplication.search_fragment.view.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.MealHub.databinding.ActivityHomeScreenBinding;
 
@@ -28,7 +25,7 @@ public class home_screen extends AppCompatActivity {
 
     ActivityHomeScreenBinding binding;
     private static final String RANDOM_MEAL_FRAGMENT = "RANDOM_MEAL_FRAGMENT";
-    RandomMealFragment randomMealFragment;
+    HomeScreenFragment homeScreenFragment;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
     Button connect;
@@ -39,14 +36,14 @@ public class home_screen extends AppCompatActivity {
         setContentView(binding.getRoot());
         if(isConnected()){
             Toast.makeText(home_screen.this, "Connected to Network", Toast.LENGTH_SHORT).show();
-            replaceFragment(new RandomMealFragment());
+            replaceFragment(new HomeScreenFragment());
         }else{
             replaceFragment(new FavMealFragment());
             Toast.makeText(home_screen.this, "You need to connect to Network", Toast.LENGTH_SHORT).show();
         }
         binding.bottomNavView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navHome)
-                replaceFragment(new RandomMealFragment());
+                replaceFragment(new HomeScreenFragment());
             else if (item.getItemId() == R.id.navFav)
                 replaceFragment(new FavMealFragment());
             else if (item.getItemId() == R.id.navSearch)

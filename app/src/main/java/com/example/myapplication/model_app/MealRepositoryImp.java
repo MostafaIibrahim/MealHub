@@ -2,14 +2,13 @@ package com.example.myapplication.model_app;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.myapplication.calender_screen.presenter_calender.PlannerPresenterCallBack;
+import com.example.myapplication.calender_fragment.presenter_calender.PlannerPresenterCallBack;
 import com.example.myapplication.model_app.db.MealLocalDataSource;
 import com.example.myapplication.model_app.utility.CategroyNetworkCallBack;
 import com.example.myapplication.model_app.utility.CountryNetworkCallBack;
 import com.example.myapplication.model_app.utility.IngredientNetworkCallBack;
 import com.example.myapplication.model_app.utility.MealNetworkCallBack;
 
-import java.util.Collections;
 import java.util.List;
 
 public class MealRepositoryImp implements  MealRepository , DbcallBack{
@@ -80,7 +79,7 @@ public class MealRepositoryImp implements  MealRepository , DbcallBack{
     }
 
     @Override
-    public void getMealByCountryNetworkCallBack(String country, MealNetworkCallBack mealNetworkCallBack) {
+    public void getMealByCountryNetworkCallBack(String country, CountryNetworkCallBack mealNetworkCallBack) {
         remoteDataSource.getMealByCountryNetworkCallBack(country,mealNetworkCallBack);
     }
 
