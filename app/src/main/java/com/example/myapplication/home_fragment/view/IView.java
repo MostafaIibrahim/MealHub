@@ -8,4 +8,5 @@ public interface IView {
     public void getRandomMeal(List<Meal> meal);
     public void showError(String errorMsg);
     public void getCountries(List<Meal>  countryMeal);
+    public void getBreakFast(List<Meal> breakfastMeals);
 }

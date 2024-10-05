@@ -78,6 +78,11 @@ public class SearchPresenter implements MealNetworkCallBack, CategroyNetworkCall
     }
 
     @Override
+    public void mealByCategoryResponseOnSuccessful(List<Meal> meals) {
+
+    }
+
+    @Override
     public void getMealByCountryResponseOnSuccessful(List<Meal> countryMeals) {
         //Here I need to search on who needs this,it depends on who call the method in repo
     }

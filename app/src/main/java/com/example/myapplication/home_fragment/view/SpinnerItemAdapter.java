@@ -81,8 +81,8 @@ public class SpinnerItemAdapter extends RecyclerView.Adapter<SpinnerItemAdapter.
             layout = itemView;
 //            mealCrd = layout.findViewById(R.id.spinnerCardItem);
             //favBtn = layout.findViewById(R.id.spinnerHrtIcon);
-            mealTitle = layout.findViewById(R.id.breafastTitle);
-            mealImg = layout.findViewById(R.id.breakFastThumbnail);
+            mealTitle = layout.findViewById(R.id.dinnerTitle);
+            mealImg = layout.findViewById(R.id.Thumbnail);
         }
 
     }

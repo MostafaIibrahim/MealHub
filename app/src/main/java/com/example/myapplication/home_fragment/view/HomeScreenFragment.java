@@ -11,7 +11,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -46,12 +45,12 @@ public class HomeScreenFragment extends Fragment implements IView {
     CardView card;
     boolean isFavorite = false;
     HomeScreenPresenter presenter;
-    List<Meal> _Random_meal;
+    List<Meal> _Random_meal = null;
     FavMealFragment favMealFragment;
-    Spinner countrySpinner;
+    Spinner countrySpinner,mealModeSpinner;
     RecyclerView spinnerRcylerView, breakFastRecycler;
     SpinnerItemAdapter spinnerAdapter;
-    BreakFastItemAdapter BreakFastAdapter;
+    MealModetemAdapter mealModeAdapter;
     public HomeScreenFragment() {
         // Required empty public constructor
         super(R.layout.fragment_random_meal);
@@ -81,8 +80,8 @@ public class HomeScreenFragment extends Fragment implements IView {
         setupHeartBtn();
         setupCardClick();
         setupAddToCalendarBtn();
+        setupSpinnerMealMode();
         presenter.requestData();
-        FragmentManager manager = getParentFragmentManager();
     }
     private void initializeViews(View view){
         nameTxt = view.findViewById(R.id.rmTitle);
@@ -94,7 +93,8 @@ public class HomeScreenFragment extends Fragment implements IView {
         addIcon = view.findViewById(R.id.addCalendarBtn);
         countrySpinner = view.findViewById(R.id.countrySpinner);
         spinnerRcylerView = view.findViewById(R.id.spinnerRecyclerView);
-        breakFastRecycler = view.findViewById(R.id.BreakfastRecyclerView);
+        breakFastRecycler = view.findViewById(R.id.breakfastRecyclerView);
+        mealModeSpinner = view.findViewById(R.id.mealSpinner);
     }
     private void setupSpinnerRecyclerView(){
         spinnerRcylerView.setHasFixedSize(true);
@@ -108,7 +108,7 @@ public class HomeScreenFragment extends Fragment implements IView {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         breakFastRecycler.setLayoutManager(layoutManager);
-        BreakFastAdapter = new BreakFastItemAdapter(getContext(),presenter);
+        mealModeAdapter = new MealModetemAdapter(getContext(),presenter);
     }
     private void setupCountrySpinner(){
         Random random = new Random();
@@ -136,10 +136,30 @@ public class HomeScreenFragment extends Fragment implements IView {
             }
         });
     }
+    private void setupSpinnerMealMode(){
+        String[] spinnerList = {"Select a meal..","Breakfast","Dinner"};
+        ArrayAdapter<String> mealModeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,spinnerList);
+        mealModeAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        mealModeSpinner.setAdapter(mealModeAdapter);
+        mealModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedMeal = adapterView.getItemAtPosition(i).toString();
+                if (selectedMeal == "Breakfast"){ presenter.searchByCategory("Breakfast"); }
+                else if (selectedMeal == "Dinner") {getDinner();}
+                else{ presenter.searchByCategory("Starter");}
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
     private void setupHeartBtn(){
         hrtIcon.setOnClickListener(view -> {
                 isFavorite = !isFavorite;
-                if(! (_Random_meal.isEmpty())){
+                if(_Random_meal != null){
                     if (isFavorite){
                         hrtIcon.setImageResource(R.drawable.baseline_favorite_24);
                         presenter.addMeal(_Random_meal.get(0));
@@ -155,7 +175,7 @@ public class HomeScreenFragment extends Fragment implements IView {
     }
     private void setupCardClick(){
         card.setOnClickListener( view ->{
-                if(_Random_meal.isEmpty()){
+                if(_Random_meal != null){
                     Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
                     outIntent.putExtra(WHOLE_OBJ, _Random_meal.get(0));
                     startActivity(outIntent);
@@ -167,6 +187,12 @@ public class HomeScreenFragment extends Fragment implements IView {
                 Toast.makeText(getContext(), "Add to Calender", Toast.LENGTH_SHORT).show();
         });
     }
+    private void getDinner(){
+        String[] dinner_categories = {"Beef","Chicken",	"Lamb","Pasta","Seafood","Vegan","Vegetarian"};
+        Random random = new Random();
+        presenter.searchByCategory(dinner_categories[random.nextInt(dinner_categories.length)]);
+    }
+
     @Override
     public void getRandomMeal(List<Meal> meal) {
         if (meal != null && isAdded()) {
@@ -182,12 +208,10 @@ public class HomeScreenFragment extends Fragment implements IView {
                     .into(randImg);
         }
     }
-
     @Override
     public void showError(String errorMsg) {
         System.out.println("Wrong URD");
     }
-
     @Override
     public void getCountries(List<Meal> countryMeal) {
         //I will set spinner adapter
@@ -195,6 +219,11 @@ public class HomeScreenFragment extends Fragment implements IView {
         spinnerAdapter.updateMeals(countryMeal);
         spinnerAdapter.notifyDataSetChanged();
     }
-
+    @Override
+    public void getBreakFast(List<Meal> breakfastMeals) {
+        breakFastRecycler.setAdapter(mealModeAdapter);
+        mealModeAdapter.updateMeals(breakfastMeals);
+        mealModeAdapter.notifyDataSetChanged();
+    }
 
 }

@@ -22,26 +22,39 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.MealHub.databinding.ActivityHomeScreenBinding;
 
 public class home_screen extends AppCompatActivity {
-
-    ActivityHomeScreenBinding binding;
-    private static final String RANDOM_MEAL_FRAGMENT = "RANDOM_MEAL_FRAGMENT";
-    HomeScreenFragment homeScreenFragment;
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
-    Button connect;
+    private Button connect;
+    ActivityHomeScreenBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityHomeScreenBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        if(isConnected()){
-            Toast.makeText(home_screen.this, "Connected to Network", Toast.LENGTH_SHORT).show();
+        setContentView(R.layout.activity_home_screen);
+        bottomNavigationView = findViewById(R.id.bottomNavView);
+        frameLayout = findViewById(R.id.fragmentContainerView);
+
+        checkNetworkAndInitialize();
+        setupBottomNavigationView();
+
+
+    }
+    private void checkNetworkAndInitialize(){
+        if (isConnectedToNetwork()) {
+            Toast.makeText(this, "Connected to Network", Toast.LENGTH_SHORT).show();
             replaceFragment(new HomeScreenFragment());
-        }else{
+        } else {
+            Toast.makeText(this, "You need to connect to Network", Toast.LENGTH_SHORT).show();
             replaceFragment(new FavMealFragment());
-            Toast.makeText(home_screen.this, "You need to connect to Network", Toast.LENGTH_SHORT).show();
         }
-        binding.bottomNavView.setOnItemSelectedListener(item -> {
+    }
+    public void replaceFragment(Fragment fragment){
+        FragmentManager manager= getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction().setReorderingAllowed(true);
+        fragmentTransaction.replace(R.id.fragmentContainerView,fragment);
+        fragmentTransaction.commit();
+    }
+    private void setupBottomNavigationView(){
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.navHome)
                 replaceFragment(new HomeScreenFragment());
             else if (item.getItemId() == R.id.navFav)
@@ -52,15 +65,8 @@ public class home_screen extends AppCompatActivity {
                 replaceFragment(new CalenderSearch());
             return true;
         });
-
     }
-    public void replaceFragment(Fragment fragment){
-        FragmentManager manager= getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = manager.beginTransaction().setReorderingAllowed(true);
-        fragmentTransaction.replace(R.id.fragmentContainerView,fragment);
-        fragmentTransaction.commit();
-    }
-    boolean isConnected(){
+    boolean isConnectedToNetwork(){
         boolean state = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();

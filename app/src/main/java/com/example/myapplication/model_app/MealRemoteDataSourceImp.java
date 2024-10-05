@@ -80,12 +80,12 @@ public class MealRemoteDataSourceImp implements MealRemoteDataSource {
     }
 
     @Override
-    public void getMealsByCategoryNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack) {
+    public void getMealsByCategoryNetworkCallBack(String query, CategroyNetworkCallBack mealNetworkCallBack) {
         serviceCall.searchMealsByCategory(query).enqueue(new Callback<MealApiResponse<Meal>>() {
             @Override
             public void onResponse(Call<MealApiResponse<Meal>> call, Response<MealApiResponse<Meal>> response) {
                 Log.i(TAG, "onResponse: Successed");
-                mealNetworkCallBack.mealResponseOnSuccessful(response.body().meals);
+                mealNetworkCallBack.mealByCategoryResponseOnSuccessful(response.body().meals);
 
             }
 

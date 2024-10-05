@@ -40,7 +40,7 @@ public class MealRepositoryImp implements  MealRepository , DbcallBack{
 
 
     @Override
-    public void getMealsByCategoryNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack){
+    public void getMealsByCategoryNetworkCallBack(String query, CategroyNetworkCallBack mealNetworkCallBack){
         remoteDataSource.getMealsByCategoryNetworkCallBack(query, mealNetworkCallBack);
     }
 

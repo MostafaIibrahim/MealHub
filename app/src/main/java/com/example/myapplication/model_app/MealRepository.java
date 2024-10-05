@@ -14,7 +14,7 @@ public interface MealRepository {
 
     void getMealByNameNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
 
-    void getMealsByCategoryNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
+    void getMealsByCategoryNetworkCallBack(String query, CategroyNetworkCallBack mealNetworkCallBack);
 
     void getMealsByIngredientNetworkCallBack(String query, MealNetworkCallBack mealNetworkCallBack);
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.MealHub.R;
 import com.example.myapplication.details_activity.view.DetailsMealActivity;
@@ -32,7 +33,6 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     FavMealPresenter presenter;
     public final static String WHOLE_OBJ = "Meal_Object";
     public FavMealFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -43,7 +43,6 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fav_meal, container, false);
     }
 
@@ -90,8 +89,13 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
 
     @Override
     public void onDetailsClickListener(Meal meal) {
-        Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
-        outIntent.putExtra(WHOLE_OBJ, meal);
-        startActivity(outIntent);
+        if(meal.getStrCategory() != null){
+            Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
+            outIntent.putExtra(WHOLE_OBJ, meal);
+            startActivity(outIntent);
+        }
+        else{
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+        }
     }
 }

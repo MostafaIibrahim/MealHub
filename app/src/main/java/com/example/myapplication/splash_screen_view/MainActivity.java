@@ -12,7 +12,7 @@ import com.example.myapplication.home_screen.home_view.home_screen;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final int SPLASH_TIMEOUT = 3000;
+    private static final int SPLASH_TIMEOUT = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
