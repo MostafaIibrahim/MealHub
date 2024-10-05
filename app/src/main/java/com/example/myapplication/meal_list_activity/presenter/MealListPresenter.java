@@ -19,7 +19,10 @@ public class MealListPresenter implements MealNetworkCallBack, CountryNetworkCal
             repository = repo;
             this.view = view;
     }
-
+    public void addMeal(Meal meal){
+        repository.insertMeal(meal);
+        meal.setIsfav(true);
+    }
     public void searchByCategory(String query) {
         System.out.println("I am searching by category");
         repository.getMealsByCategoryNetworkCallBack(query,this);}

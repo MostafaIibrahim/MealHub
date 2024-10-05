@@ -65,10 +65,17 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         //Put these in a function
         presenter.requestMealById(recievedObj);
         attachToAdapter();
-
+        updateFavoriteButtonLabel();
         favButton.setOnClickListener( view -> {
-                presenter.addToFav(objMeal);
-                Toast.makeText(DetailsMealActivity.this, "This meal is added to favorite", Toast.LENGTH_SHORT).show();
+                if( objMeal.isIsfav()){
+                    presenter.deleteMeal(objMeal);
+                    favButton.setText("Add to Favorite");
+                    Toast.makeText(DetailsMealActivity.this, "This meal is deleted from favorite", Toast.LENGTH_SHORT).show();
+                }else{
+                    presenter.addMeal(objMeal);
+                    favButton.setText("Delete from Favorite");
+                    Toast.makeText(DetailsMealActivity.this, "This meal is added to favorite", Toast.LENGTH_SHORT).show();
+                }
         });
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select a Date for your Meal")
@@ -132,7 +139,15 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         rcyc_ingredients.setAdapter(adapterIngredients);
         adapterIngredients.notifyDataSetChanged();
     }
-
+    private void updateFavoriteButtonLabel() {
+        if (objMeal != null) {
+            if (objMeal.isIsfav()) {
+                favButton.setText("Delete from Favorite"); // Meal is a favorite
+            } else {
+                favButton.setText("Add to Favorite"); // Meal is not a favorite
+            }
+        }
+    }
     @Override
     public void getMealFromRespond(Meal meal) {
         objMeal = meal;
@@ -149,6 +164,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         WeeklyMealPlan mealPlan = new WeeklyMealPlan();
 
         // Map the fields from objMeal to mealPlan
+        mealPlan.setFavorite(objMeal.isIsfav());
         mealPlan.setIdMeal(objMeal.getIdMeal());
         mealPlan.setStrMeal(objMeal.getStrMeal());
         mealPlan.setStrCategory(objMeal.getStrCategory());

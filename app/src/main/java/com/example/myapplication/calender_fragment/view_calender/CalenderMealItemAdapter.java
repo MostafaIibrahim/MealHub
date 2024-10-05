@@ -104,6 +104,7 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
         Meal meal = new Meal();
 
         // Map the fields from weeklyMealPlan to meal
+        meal.setIsfav(weeklyMealPlan.isFavorite());
         meal.setIdMeal(weeklyMealPlan.getIdMeal());
         meal.setStrMeal(weeklyMealPlan.getStrMeal());
         meal.setStrCategory(weeklyMealPlan.getStrCategory());

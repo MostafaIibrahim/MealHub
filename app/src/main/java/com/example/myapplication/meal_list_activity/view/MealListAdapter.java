@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
 import com.example.myapplication.details_activity.view.DetailsMealActivity;
+import com.example.myapplication.meal_list_activity.presenter.MealListPresenter;
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepository;
 
@@ -27,11 +28,11 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.ViewHo
     private final Context context;
     private List<Meal> meals;
     private static final String TAG = "Category Adapter RecycleView";
-    MealRepository repo;
+    MealListPresenter presenter;
     public static final String MEAL_ID = "meal_id";
-    public MealListAdapter(Context context, MealRepository repo) {
+    public MealListAdapter(Context context, MealListPresenter presenter) {
         this.context = context;
-        this.repo = repo;
+        this.presenter = presenter;
     }
 
     public void updateMeals(List<Meal> meals) {
@@ -56,7 +57,7 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.ViewHo
                 .into(holder.mealImg);
         holder.favBtn.setOnClickListener(view -> {
             Toast.makeText(context, "The meal is added to favorite", Toast.LENGTH_SHORT).show();
-            repo.insertMeal(meals.get(position));
+            presenter.addMeal(meals.get(position));
 
         });
         holder.mealCrd.setOnClickListener(view -> {

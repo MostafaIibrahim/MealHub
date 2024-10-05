@@ -21,6 +21,7 @@ public class HomeScreenPresenter implements MealNetworkCallBack , CountryNetwork
     }
     public void addMeal(Meal meal){
         repository.insertMeal(meal);
+        meal.setIsfav(true);
     }
     public void rmvMeal(Meal meal) { repository.deleteMeal(meal);}
     public void requestData(){ repository.getMealNetworkCallBack(this);  }

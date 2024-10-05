@@ -46,7 +46,7 @@ public class ListOfMeals extends AppCompatActivity implements IViewListOfMeals {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerMealList.setLayoutManager(layoutManager);
-        adapter = new MealListAdapter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(this), MealRemoteDataSourceImp.getInstance()));
+        adapter = new MealListAdapter(this, presenter);
         recyclerMealList.setAdapter(adapter);
     }
     void getIntentObj(){

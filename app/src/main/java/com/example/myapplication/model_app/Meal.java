@@ -16,13 +16,12 @@ public class Meal implements Serializable {
     @NonNull
    @SerializedName("idMeal")
    String idMeal;
-
    @SerializedName("strMeal")
    String strMeal;
 
    @SerializedName("strCategory")
    String strCategory;
-
+    boolean isfav;
    @SerializedName("strArea")
    String strArea;
    @SerializedName("strInstructions")
@@ -165,7 +164,15 @@ public class Meal implements Serializable {
     public String getStrInstructions() {
         return strInstructions;
     }
-    
+
+    public boolean isIsfav() {
+        return isfav;
+    }
+
+    public void setIsfav(boolean isfav) {
+        this.isfav = isfav;
+    }
+
     public void setStrMealThumb(String strMealThumb) {
         this.strMealThumb = strMealThumb;
     }

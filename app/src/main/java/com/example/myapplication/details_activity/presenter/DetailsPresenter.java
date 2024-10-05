@@ -15,9 +15,6 @@ public class DetailsPresenter implements MealNetworkCallBack {
         this.view = view;
         this.mealRepository = mealRepository;
     }
-    public void addToFav(Meal meal){
-        mealRepository.insertMeal(meal);
-    }
 
     public void requestMealById(String id){
         mealRepository.getMealByIdNetworkCallBack(id,this);
@@ -26,6 +23,15 @@ public class DetailsPresenter implements MealNetworkCallBack {
         meal.setMealDate(date);
         mealRepository.insertPlannedMeal(meal);
     }
+    public void addMeal(Meal meal){
+        mealRepository.insertMeal(meal);
+        meal.setIsfav(true);
+    }
+    public void deleteMeal(Meal meal){
+        mealRepository.deleteMeal(meal);
+        meal.setIsfav(false);
+    }
+
     @Override
     public void mealResponseOnSuccessful(List<Meal> meals) {
         view.getMealFromRespond(meals.get(0));
