@@ -18,8 +18,12 @@ public class FavMealPresenter {
     //Function to request to delete Data from productLocal
     public void deleteRequest(Meal meal){
         repository.deleteMeal(meal);
+        meal.setIsfav(false);
     }
-
+    public void addRequest(Meal meal){
+        repository.insertMeal(meal);
+        meal.setIsfav(true);
+    }
     //I want to use something that will get al live data
     public LiveData<List<Meal>> getUpdatedData(){
         return repository.getStoredMeals();

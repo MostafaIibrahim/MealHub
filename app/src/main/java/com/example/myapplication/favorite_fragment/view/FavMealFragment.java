@@ -23,6 +23,7 @@ import com.example.myapplication.model_app.MealRemoteDataSourceImp;
 import com.example.myapplication.model_app.MealRepositoryImp;
 import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
 import com.example.myapplication.favorite_fragment.presenter.FavMealPresenter;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     RecyclerView favRcyView;
     FavMealAdapter favAdapter;
     FavMealPresenter presenter;
+    View rootView;
+    Meal meal;
     public final static String WHOLE_OBJ = "Meal_Object";
     public FavMealFragment() {
     }
@@ -70,6 +73,13 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
 
 
     }
+    private void showSnackbarWithAction(View view,  Meal removedMeal) {
+        Snackbar snackbar = Snackbar.make(view, "Meal removed", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", (View v) -> {
+                        presenter.addRequest(removedMeal);
+                });
+        snackbar.show();
+    }
 
     @Override
     public LiveData<List<Meal>> updateList() {
@@ -84,12 +94,14 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     @Override
     public void onDeleteClickListener(Meal meal) {
         presenter.deleteRequest(meal);
+        showSnackbarWithAction(getView(), meal);
 
     }
 
     @Override
     public void onDetailsClickListener(Meal meal) {
         if(meal.getStrCategory() != null){
+            this.meal = meal;
             Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
             outIntent.putExtra(WHOLE_OBJ, meal);
             startActivity(outIntent);
