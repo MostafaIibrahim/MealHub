@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.MealHub.R;
 import com.example.myapplication.home_screen.home_view.home_screen;
 
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+        LottieAnimationView animationView = findViewById(R.id.lottieAnimationView);
+        animationView.setSpeed(1.2f);
+        animationView.playAnimation();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

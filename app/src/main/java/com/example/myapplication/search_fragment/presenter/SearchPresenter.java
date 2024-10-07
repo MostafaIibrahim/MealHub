@@ -1,5 +1,7 @@
 package com.example.myapplication.search_fragment.presenter;
 
+import android.widget.Toast;
+
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepository;
 import com.example.myapplication.model_app.category.CategoryMeal;
@@ -39,7 +41,9 @@ public class SearchPresenter implements MealNetworkCallBack, CategroyNetworkCall
         repository.getMealByNameNetworkCallBack(query,this);
     }
 
-    public void searchByCategory(String query) { repository.getMealsByCategoryNetworkCallBack(query,this);}
+    public void searchByCategory(String query) {
+        System.out.println("I am searching by Category "+query);
+        repository.getMealsByCategoryNetworkCallBack(query,this);}
 
     public void searchByIngredient(String query) { repository.getMealsByIngredientNetworkCallBack(query,this);}
 
@@ -77,7 +81,8 @@ public class SearchPresenter implements MealNetworkCallBack, CategroyNetworkCall
 
     @Override
     public void mealByCategoryResponseOnSuccessful(List<Meal> meals) {
-
+        //It should appears here
+        view.getMealsBySearch(meals);
     }
 
     @Override

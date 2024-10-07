@@ -160,7 +160,6 @@ public class SearchFragment extends Fragment implements IViewSearch  {
             bySearchAdapter.updateMeals(meals);
             bySearchAdapter.notifyDataSetChanged();
         }else {
-            Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
         }
 
     }

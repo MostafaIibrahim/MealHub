@@ -37,6 +37,7 @@ import com.example.myapplication.home_fragment.presenter.HomeScreenPresenter;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +79,7 @@ public class HomeScreenFragment extends Fragment implements IView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Calendar clndr = Calendar.getInstance();
         initializeViews(view);
         setupSpinnerRecyclerView();
         setupBreakFastRecyclerView();
@@ -90,6 +92,7 @@ public class HomeScreenFragment extends Fragment implements IView {
                 .setTitleText("Select a Date for your Meal")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())  // Default selection: today
                 .build();
+
         setupAddToCalendarBtn();
     }
     private void initializeViews(View view){

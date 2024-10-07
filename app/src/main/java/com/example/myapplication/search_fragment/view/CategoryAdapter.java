@@ -49,10 +49,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Click Listener is ok", Toast.LENGTH_SHORT).show();
-                Intent toListCategory = new Intent(context, ListOfMeals.class);
-                toListCategory.putExtra(CATEGORY_NAME,meals.get(position).getStrCategory());
-                context.startActivity(toListCategory);
+                if(meals != null){
+                    Toast.makeText(context, "Explore meals from "+meals.get(position).getStrCategory()+" category", Toast.LENGTH_SHORT).show();
+                    Intent toListCategory = new Intent(context, ListOfMeals.class);
+                    toListCategory.putExtra(CATEGORY_NAME,meals.get(position).getStrCategory());
+                    context.startActivity(toListCategory);
+                }
+
             }
         });
     }

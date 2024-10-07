@@ -34,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,10 +42,11 @@ import java.util.Locale;
 public class CalenderSearch extends Fragment implements IViewCalendar {
     RecyclerView calenderRcyView;
     CalenderMealItemAdapter adapter;
-    ICalendarPresenter presenter;
+    CalendarPresenter presenter;
     CalendarView clndrView;
     FloatingActionButton fab;
     TextView todayLabel;
+    String date;
     public CalenderSearch() {
         // Required empty public constructor
     }
@@ -67,27 +69,26 @@ public class CalenderSearch extends Fragment implements IViewCalendar {
         fab = view.findViewById(R.id.addMealFab);
         todayLabel = view.findViewById(R.id.todayDateLabel);
         todayLabel.setText(getTodayDate());
-
         presenter = new CalendarPresenter(this,MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance( getContext() ),MealRemoteDataSourceImp.getInstance()));
         setupRecyclerView();
         setupListeners();
     }
     private void setupListeners(){
         clndrView.setOnDateChangeListener( (@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) -> {
-            String date = dayOfMonth + "-" + (month+1) + "-" + year;
+            if(dayOfMonth < 10){ date = "0" + dayOfMonth + "-" + (month+1) + "-" + year;}
+            else{date = dayOfMonth + "-" + (month+1) + "-" + year;}
+            Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
             presenter.getPlannedMealsOfTheDay(date).observe(getViewLifecycleOwner(),mealList -> {
                 if (mealList == null ) {
                     adapter.clearMeals();
                 } else {
-                    adapter.updateMeals(mealList);  // Update the RecyclerView adapter with new data
+                    adapter.updateMeals(mealList,date);  // Update the RecyclerView adapter with new data
                     calenderRcyView.setAdapter(adapter);  // Set adapter to the RecyclerView if needed
                     adapter.notifyDataSetChanged();  // Notify adapter about the data change
                 }
             });
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fab.setOnClickListener( view -> {
                 PopupMenu popupMenu =  new PopupMenu(getContext(),fab);
                 popupMenu.getMenuInflater().inflate(R.menu.fab_menu,popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -104,7 +105,6 @@ public class CalenderSearch extends Fragment implements IViewCalendar {
                     }
                 });
                 popupMenu.show();
-            }
         });
     }
     private String getTodayDate() {
@@ -117,7 +117,7 @@ public class CalenderSearch extends Fragment implements IViewCalendar {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         calenderRcyView.setLayoutManager(layoutManager);
-        adapter = new CalenderMealItemAdapter(getContext(), MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
+        adapter = new CalenderMealItemAdapter(getContext(), presenter, date);
         calenderRcyView.setAdapter(adapter);
 
     }

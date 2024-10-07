@@ -54,10 +54,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Click Listener is ok from ingredient", Toast.LENGTH_SHORT).show();
-                Intent toListCountry = new Intent(context, ListOfMeals.class);
-                toListCountry.putExtra(Ingredient_NAME,ingredientMeals.get(position).getStrIngredient());
-                context.startActivity(toListCountry);
+                if(ingredientMeals != null){
+                    Toast.makeText(context, "Explore meals from "+ ingredientMeals.get(position).getStrIngredient() + " ingredient", Toast.LENGTH_SHORT).show();
+                    Intent toListCountry = new Intent(context, ListOfMeals.class);
+                    toListCountry.putExtra(Ingredient_NAME,ingredientMeals.get(position).getStrIngredient());
+                    context.startActivity(toListCountry);
+                }
+
             }
         });
     }

@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.MealHub.R;
+import com.example.myapplication.calender_fragment.presenter_calender.CalendarPresenter;
 import com.example.myapplication.details_activity.view.DetailsMealActivity;
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepository;
 import com.example.myapplication.model_app.WeeklyMealPlan;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -29,14 +31,17 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
     private final Context context;
     private List<WeeklyMealPlan> meals;
     private static final String TAG = "Day Meal Card Adapter RecycleView";
-    MealRepository repo;
+    CalendarPresenter presenter;
+    String date;
     public static final String MEAL_ID = "meal_id";
-    public CalenderMealItemAdapter(Context context, MealRepository repo) {
+    public CalenderMealItemAdapter(Context context, CalendarPresenter presenter,String date) {
         this.context = context;
-        this.repo = repo;
+        this.presenter = presenter;
+        this.date = date;
     }
 
-    public void updateMeals(List<WeeklyMealPlan> meals) {
+    public void updateMeals(List<WeeklyMealPlan> meals,String date) {
+        this.date = date;
         this.meals = meals;
     }
     public void clearMeals(){
@@ -60,7 +65,8 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
                     .into(holder.mealImg);
             holder.rmvBtn.setOnClickListener(view -> {
                 Toast.makeText(context, "The meal is deleted from Calender", Toast.LENGTH_SHORT).show();
-                repo.deletePlannedMeal(meals.get(position));
+                presenter.deletePlannedMeal(meals.get(position));
+                showSnackbarWithAction(holder.itemView,meals.get(position));
             });
             holder.mealCrd.setOnClickListener(view -> {
                 Intent toDetails = new Intent(context, DetailsMealActivity.class);
@@ -72,6 +78,14 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
             holder.mealTitle.setText("Not Founded Meals for Today");
         }
 
+    }
+    private void showSnackbarWithAction(View view,  WeeklyMealPlan removedMeal) {
+        Snackbar snackbar = Snackbar.make(view, "Meal removed", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", (View v) -> {
+//                    repo.insertMeal(removedMeal);
+                    presenter.insertRequest(removedMeal,date);
+                });
+        snackbar.show();
     }
 
     @Override

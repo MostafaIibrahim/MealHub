@@ -32,6 +32,9 @@ public class CalendarPresenter implements ICalendarPresenter , PlannerPresenterC
         System.out.println("I am in request");
          return repo.getMealsOfDay(MealDate);
     }
+    public void deletePlannedMeal(WeeklyMealPlan plannedMeal){
+        repo.deletePlannedMeal(plannedMeal);
+    }
 
     @Override
     public void insertRequest(WeeklyMealPlan meal, String date){

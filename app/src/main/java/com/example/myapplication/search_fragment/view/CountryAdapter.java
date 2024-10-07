@@ -58,11 +58,14 @@ public void onBindViewHolder(@NonNull CountryAdapter.ViewHolder holder, int posi
     holder.linearLayout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(context, "Click Listener is ok from country", Toast.LENGTH_SHORT).show();
-            Intent toListCountry = new Intent(context, ListOfMeals.class);
-            toListCountry.putExtra(COUNTRY_NAME,countries.get(position).getStrArea());
-            System.out.println("I am in country and I will move to list of meal activity");
-            context.startActivity(toListCountry);
+            if(countries != null){
+                Toast.makeText(context, "Explore " + countries.get(position).getStrArea() + " dishes", Toast.LENGTH_SHORT).show();
+                Intent toListCountry = new Intent(context, ListOfMeals.class);
+                toListCountry.putExtra(COUNTRY_NAME,countries.get(position).getStrArea());
+                System.out.println("I am in country and I will move to list of meal activity");
+                context.startActivity(toListCountry);
+            }
+
         }
     });
 }

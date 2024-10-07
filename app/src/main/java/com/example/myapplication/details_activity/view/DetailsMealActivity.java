@@ -91,7 +91,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
                 // Convert the selected date in milliseconds to a readable format
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                 String selectedDate = sdf.format(new Date(selection));
-            Toast.makeText(this, selectedDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, objMeal.getStrMeal() + "is added to "+ selectedDate, Toast.LENGTH_SHORT).show();
                 //Send the meal and selected data to db
                 presenter.insertRequest(convertToWeeklyPlan(objMeal),selectedDate);
             Toast.makeText(this, "Added to Calender db", Toast.LENGTH_SHORT).show();
@@ -157,7 +157,7 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
 
     @Override
     public void onFailureResult(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
     public static WeeklyMealPlan convertToWeeklyPlan(Meal objMeal) {
         // Create an instance of WeeklyMealPlan
