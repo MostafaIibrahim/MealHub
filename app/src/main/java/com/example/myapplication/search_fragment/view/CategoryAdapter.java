@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +49,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 if(meals != null){
-                    Toast.makeText(context, "Explore meals from "+meals.get(position).getStrCategory()+" category", Toast.LENGTH_SHORT).show();
                     Intent toListCategory = new Intent(context, ListOfMeals.class);
                     toListCategory.putExtra(CATEGORY_NAME,meals.get(position).getStrCategory());
                     context.startActivity(toListCategory);

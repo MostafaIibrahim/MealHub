@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,7 +54,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             @Override
             public void onClick(View view) {
                 if(ingredientMeals != null){
-                    Toast.makeText(context, "Explore meals from "+ ingredientMeals.get(position).getStrIngredient() + " ingredient", Toast.LENGTH_SHORT).show();
                     Intent toListCountry = new Intent(context, ListOfMeals.class);
                     toListCountry.putExtra(Ingredient_NAME,ingredientMeals.get(position).getStrIngredient());
                     context.startActivity(toListCountry);

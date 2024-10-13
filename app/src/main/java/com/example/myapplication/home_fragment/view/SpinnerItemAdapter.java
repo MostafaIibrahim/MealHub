@@ -50,7 +50,6 @@ public class SpinnerItemAdapter extends RecyclerView.Adapter<SpinnerItemAdapter.
                 .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).circleCrop()
                 .into(holder.mealImg);
         /*holder.favBtn.setOnClickListener(view -> {
-            Toast.makeText(context, "The meal is added to favorite", Toast.LENGTH_SHORT).show();
             presenter.addMeal(meals.get(position));
 
         });*/

@@ -6,7 +6,6 @@ import static com.example.myapplication.search_fragment.view.IngredientAdapter.I
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,6 +76,5 @@ public class ListOfMeals extends AppCompatActivity implements IViewListOfMeals {
 
     @Override
     public void showError(String errorMsg) {
-        Toast.makeText(this,errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

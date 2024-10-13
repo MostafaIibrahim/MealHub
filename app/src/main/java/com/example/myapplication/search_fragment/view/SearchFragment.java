@@ -1,5 +1,8 @@
 package com.example.myapplication.search_fragment.view;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,9 +18,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.MealHub.R;
 import com.example.myapplication.model_app.MealRemoteDataSourceImp;
 import com.example.myapplication.model_app.Meal;
@@ -36,6 +40,7 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     private static final int FILTER_BY_CATEGORY = 1;
     private static final int FILTER_BY_INGREDIENT = 2;
     private int currentFilter = FILTER_BY_NAME;
+    LottieAnimationView noInternetAnimation;
     LinearLayout linearLayout;
     SearchView searchBar;
     private RadioGroup filterRadioGroup;
@@ -46,6 +51,7 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     CategoryAdapter categoryAdapter;
     IngredientAdapter ingredientAdapter;
     BySearchAdapter bySearchAdapter;
+    ScrollView scrollView;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -64,6 +70,13 @@ public class SearchFragment extends Fragment implements IViewSearch  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeView(view);
+        if(isConnectedToNetwork() != true){
+            noInternetAnimation.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(view.GONE);
+        }else{
+            noInternetAnimation.setVisibility(View.GONE);
+            scrollView.setVisibility(view.VISIBLE);
+        }
         presenter = new SearchPresenter(this, MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()));
         setupRecyclerViews();
         setupListener();
@@ -82,6 +95,8 @@ public class SearchFragment extends Fragment implements IViewSearch  {
         radioIngredient = view.findViewById(R.id.radioIngredient);
         searchRcy = view.findViewById(R.id.search_results_recyclerview);
         linearLayout = view.findViewById(R.id.linearLayoutListBy);
+        noInternetAnimation = view.findViewById(R.id.searchNoInternet);
+        scrollView = view.findViewById(R.id.searchScrollView);
     }
 
     private void setupRecyclerViews() {
@@ -148,7 +163,6 @@ public class SearchFragment extends Fragment implements IViewSearch  {
             categoryAdapter.updateMeals(categoryMeals);
             categoryAdapter.notifyDataSetChanged();
         }else {
-//            Toast.makeText(getContext(), "Not Found", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -184,6 +198,10 @@ public class SearchFragment extends Fragment implements IViewSearch  {
 
     @Override
     public void showError(String errorMsg) {
-        Toast.makeText(getContext(),errorMsg, Toast.LENGTH_SHORT).show();
+    }
+    private boolean isConnectedToNetwork() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

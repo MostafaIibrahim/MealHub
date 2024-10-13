@@ -6,6 +6,18 @@
     android:background="#FFFFFF"
     tools:context="com.example.myapplication.calender_fragment.view_calender.CalenderSearch">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="73dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/home_animation" />
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"

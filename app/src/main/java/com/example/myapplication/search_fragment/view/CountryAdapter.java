@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,7 +58,6 @@ public void onBindViewHolder(@NonNull CountryAdapter.ViewHolder holder, int posi
         @Override
         public void onClick(View view) {
             if(countries != null){
-                Toast.makeText(context, "Explore " + countries.get(position).getStrArea() + " dishes", Toast.LENGTH_SHORT).show();
                 Intent toListCountry = new Intent(context, ListOfMeals.class);
                 toListCountry.putExtra(COUNTRY_NAME,countries.get(position).getStrArea());
                 System.out.println("I am in country and I will move to list of meal activity");

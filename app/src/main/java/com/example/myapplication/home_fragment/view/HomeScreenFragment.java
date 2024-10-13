@@ -1,8 +1,13 @@
 package com.example.myapplication.home_fragment.view;
 
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.example.myapplication.favorite_fragment.view.FavMealFragment.WHOLE_OBJ;
+import static com.example.myapplication.home_screen.home_view.HomeScreen.isConnected;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,14 +25,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.MealHub.R;
 import com.example.myapplication.details_activity.view.DetailsMealActivity;
+import com.example.myapplication.home_screen.home_view.HomeScreen;
 import com.example.myapplication.model_app.Meal;
 import com.example.myapplication.model_app.MealRepositoryImp;
 import com.example.myapplication.model_app.db.MealLocalDataSourceImp;
@@ -47,21 +54,22 @@ public class HomeScreenFragment extends Fragment implements IView {
     ImageView randImg;
     ImageButton hrtIcon, addIcon;
     TextView nameTxt, categoryTxt,countryTxt;
+    LottieAnimationView noInternetAnimation;
     CardView card;
     boolean isFavorite = false;
     HomeScreenPresenter presenter;
     List<Meal> _Random_meal = null;
-    FavMealFragment favMealFragment;
     Spinner countrySpinner,mealModeSpinner;
     RecyclerView spinnerRcylerView, breakFastRecycler;
     SpinnerItemAdapter spinnerAdapter;
     MealModetemAdapter mealModeAdapter;
     MaterialDatePicker<Long> datePicker;
+    ScrollView scroll;
+
     public HomeScreenFragment() {
         // Required empty public constructor
         super(R.layout.fragment_random_meal);
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +87,15 @@ public class HomeScreenFragment extends Fragment implements IView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Calendar clndr = Calendar.getInstance();
         initializeViews(view);
+        if(isConnectedToNetwork() != true){
+            noInternetAnimation.setVisibility(View.VISIBLE);
+            scroll.setVisibility(view.GONE);
+        }else{
+            noInternetAnimation.setVisibility(View.GONE);
+            scroll.setVisibility(view.VISIBLE);
+        }
+        Calendar clndr = Calendar.getInstance();
         setupSpinnerRecyclerView();
         setupBreakFastRecyclerView();
         setupCountrySpinner();
@@ -107,6 +122,8 @@ public class HomeScreenFragment extends Fragment implements IView {
         spinnerRcylerView = view.findViewById(R.id.spinnerRecyclerView);
         breakFastRecycler = view.findViewById(R.id.breakfastRecyclerView);
         mealModeSpinner = view.findViewById(R.id.mealSpinner);
+        noInternetAnimation = view.findViewById(R.id.homeNoInternet);
+        scroll = view.findViewById(R.id.scrollView);
     }
     private void setupSpinnerRecyclerView(){
         spinnerRcylerView.setHasFixedSize(true);
@@ -137,14 +154,12 @@ public class HomeScreenFragment extends Fragment implements IView {
                 String selectedCountry = adapterView.getItemAtPosition(position).toString();
                 if(selectedCountry != "Select a country..."){
                     presenter.searchByCountry(selectedCountry);
-                    Toast.makeText(getContext(), "Pich up a meal from "+ selectedCountry+" Kitchen,Enjoy!", Toast.LENGTH_SHORT).show();
                 }else{
                     presenter.searchByCountry(countries[random.nextInt(countries.length)]);
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getContext(), "Nothing selected", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -175,14 +190,12 @@ public class HomeScreenFragment extends Fragment implements IView {
                     if (isFavorite){
                         hrtIcon.setImageResource(R.drawable.baseline_favorite_24);
                         presenter.addMeal(_Random_meal.get(0));
-                        Toast.makeText(getContext(), "The meal is added to favorite", Toast.LENGTH_SHORT).show();
 //                    hrtIcon.setColorFilter(getResources().getColor(com.google.android.material.R.color.error_color_material_light));
                     }else{
                         hrtIcon.setImageResource(R.drawable.baseline_favorite_border_24);
                         presenter.rmvMeal(_Random_meal.get(0));
-                        Toast.makeText(getContext(), "The meal is removed from favorite", Toast.LENGTH_SHORT).show();
                     }
-                }else{ Toast.makeText(getContext(), "No internet Connection", Toast.LENGTH_SHORT).show(); }
+                }else{  }
         });
     }
     private void setupCardClick(){
@@ -191,7 +204,7 @@ public class HomeScreenFragment extends Fragment implements IView {
                     Intent outIntent = new Intent(getContext(), DetailsMealActivity.class);
                     outIntent.putExtra(WHOLE_OBJ, _Random_meal.get(0));
                     startActivity(outIntent);
-                }else{ Toast.makeText(getContext(), "No internet Connection", Toast.LENGTH_SHORT).show(); }
+                }else{  }
         });
     }
     private void setupAddToCalendarBtn(){
@@ -205,7 +218,6 @@ public class HomeScreenFragment extends Fragment implements IView {
                 String selectedDate = sdf.format(new Date(selection));
                 if(_Random_meal != null){
                     presenter.insertRequest(DetailsMealActivity.convertToWeeklyPlan(( _Random_meal.get(0))), selectedDate);
-                    Toast.makeText(getContext(), _Random_meal.get(0).getStrMeal() +" is added to "+selectedDate, Toast.LENGTH_SHORT).show();
                 }
         });
     }
@@ -247,5 +259,9 @@ public class HomeScreenFragment extends Fragment implements IView {
         mealModeAdapter.updateMeals(breakfastMeals);
         mealModeAdapter.notifyDataSetChanged();
     }
-
+    private boolean isConnectedToNetwork() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
 }

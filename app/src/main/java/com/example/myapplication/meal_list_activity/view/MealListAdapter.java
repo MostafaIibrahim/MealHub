@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -56,7 +55,6 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.ViewHo
                 .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).centerCrop()
                 .into(holder.mealImg);
         holder.favBtn.setOnClickListener(view -> {
-            Toast.makeText(context, "The meal is added to favorite", Toast.LENGTH_SHORT).show();
             presenter.addMeal(meals.get(position));
 
         });

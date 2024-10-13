@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,7 +56,6 @@ public class MealModetemAdapter extends RecyclerView.Adapter<MealModetemAdapter.
                 toDetails.putExtra(MEAL_ID, meals.get(position).getIdMeal());
                 context.startActivity(toDetails);
             }else {
-                Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show();
             }
 
         });

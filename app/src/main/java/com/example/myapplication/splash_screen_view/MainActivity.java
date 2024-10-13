@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.MealHub.R;
-import com.example.myapplication.home_screen.home_view.home_screen;
+import com.example.myapplication.home_screen.home_view.HomeScreen;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Start the Main Activity
-                Intent toHome = new Intent(MainActivity.this, home_screen.class);
+                Intent toHome = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(toHome);
                 // Finish the splash activity so it can't be returned to
                 finish();

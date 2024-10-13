@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.MealHub.R;
 import com.example.myapplication.details_activity.view.DetailsMealActivity;
 import com.example.myapplication.model_app.Meal;
@@ -34,6 +34,7 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
     FavMealPresenter presenter;
     View rootView;
     Meal meal;
+    LottieAnimationView noMealsAnimationView;
     public final static String WHOLE_OBJ = "Meal_Object";
     public FavMealFragment() {
     }
@@ -54,24 +55,31 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
         super.onViewCreated(view, savedInstanceState);
         presenter = new FavMealPresenter(MealRepositoryImp.getInstance(MealLocalDataSourceImp.getInstance(getContext()), MealRemoteDataSourceImp.getInstance()),this);
         favRcyView = view.findViewById(R.id.favMealRcyclerView);
-        favRcyView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager =  new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        favRcyView.setLayoutManager(layoutManager);
-        favAdapter = new FavMealAdapter(getContext(),this);
-
-        Observer<List<Meal>> observer = new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> products) {
-                favAdapter.setList(products);
-                favRcyView.setAdapter(favAdapter);
-                favAdapter.notifyDataSetChanged();
-            }
+        noMealsAnimationView = view.findViewById(R.id.homeNoInternet);
+        favRecyclerSetup();
+        Observer<List<Meal>> observer = (List<Meal> products) -> {
+                if(products.isEmpty() || products == null){
+                    noMealsAnimationView.setVisibility(View.VISIBLE);
+                    favRcyView.setVisibility(View.GONE);
+                }else{
+                    noMealsAnimationView.setVisibility(View.GONE);
+                    favRcyView.setVisibility(View.VISIBLE);
+                    favAdapter.setList(products);
+                    favRcyView.setAdapter(favAdapter);
+                    favAdapter.notifyDataSetChanged();
+                }
         };
         LiveData<List<Meal>> liveData = presenter.getUpdatedData();
         liveData.observe(getViewLifecycleOwner(),observer);
 
 
+    }
+    private void favRecyclerSetup(){
+        favRcyView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager =  new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        favRcyView.setLayoutManager(layoutManager);
+        favAdapter = new FavMealAdapter(getContext(),this);
     }
     private void showSnackbarWithAction(View view,  Meal removedMeal) {
         Snackbar snackbar = Snackbar.make(view, "Meal removed", Snackbar.LENGTH_LONG)
@@ -107,7 +115,6 @@ public class FavMealFragment extends Fragment implements IFragmentView, OnDelete
             startActivity(outIntent);
         }
         else{
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
         }
     }
 }

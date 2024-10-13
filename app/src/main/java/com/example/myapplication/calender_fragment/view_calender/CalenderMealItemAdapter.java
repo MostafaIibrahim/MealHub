@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -64,7 +63,6 @@ public class CalenderMealItemAdapter extends RecyclerView.Adapter<CalenderMealIt
                     .placeholder(R.drawable.ic_launcher_foreground).error(R.drawable.ic_launcher_foreground).centerCrop()
                     .into(holder.mealImg);
             holder.rmvBtn.setOnClickListener(view -> {
-                Toast.makeText(context, "The meal is deleted from Calender", Toast.LENGTH_SHORT).show();
                 presenter.deletePlannedMeal(meals.get(position));
                 showSnackbarWithAction(holder.itemView,meals.get(position));
             });

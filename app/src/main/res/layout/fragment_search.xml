@@ -1,79 +1,113 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context="com.example.myapplication.search_fragment.view.SearchFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="73dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/home_animation" />
+    <TextView
+        android:id="@+id/searchLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Search"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/searchNoInternet"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_meals_animation" />
     <ScrollView
         android:id="@+id/searchScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:fillViewport="true"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchLabel">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/searchLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="Search"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Filter By:"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <RadioGroup
-                    android:id="@+id/filterRadioGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radioName"
+                    <TextView
+                        android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Name" />
+                        android:text="Filter By:"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/radioCategory"
+                    <RadioGroup
+                        android:id="@+id/filterRadioGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Category" />
+                        android:layout_marginStart="8dp"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radioIngredient"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ingredient" />
-                </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/radioName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Name" />
+
+                        <RadioButton
+                            android:id="@+id/radioCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Category" />
+
+                        <RadioButton
+                            android:id="@+id/radioIngredient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ingredient" />
+                    </RadioGroup>
                 </LinearLayout>
+
                 <SearchView
                     android:id="@+id/searchView"
                     android:layout_width="320dp"
@@ -83,7 +117,6 @@
                     android:background="@drawable/searchview_background"
                     android:iconifiedByDefault="false"
                     android:queryHint="Search for ingredients, countries, or categories" />
-
 
 
             </LinearLayout>
@@ -97,8 +130,8 @@
                     android:id="@+id/search_results_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:clipToPadding="false"
                     android:background="@color/white"
+                    android:clipToPadding="false"
                     android:paddingTop="8dp"
                     android:visibility="gone" />
 
@@ -159,4 +192,4 @@
         </LinearLayout>
 
     </ScrollView>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

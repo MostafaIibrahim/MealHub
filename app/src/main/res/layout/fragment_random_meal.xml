@@ -52,7 +52,21 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/home_animation" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/homeNoInternet"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_meals_animation" />
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -79,10 +93,10 @@
                 android:id="@+id/cardCalendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:background="#FFFFFF"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
@@ -97,20 +111,22 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_launcher_background" />
+
                     <View
                         android:id="@+id/view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/scrim"
                         android:padding="16dp" />
+
                     <TextView
                         android:id="@+id/rmTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:gravity="center_vertical"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="45dp"
+                        android:gravity="center_vertical"
                         android:textColor="#EDF5FF"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -157,61 +173,100 @@
                         android:src="@drawable/baseline_favorite_border_24" />
                 </FrameLayout>
             </androidx.cardview.widget.CardView>
-            <LinearLayout
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mealModeCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Explore based on your Meal Mode"
-                    android:textColor="#1A3A6E"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            <Spinner
-                android:id="@+id/mealSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="#A1BBE6" />
-            </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/breakfastRecyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp" />
-            <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="8dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:text="Explore based on your Meal Mode"
+                        android:textColor="#1A3A6E"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/mealSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="#A1BBE6"
+                        android:padding="2dp" />/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/breakfastRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:clipToPadding="false"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp" />
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Choose a country dish to try today!"
-                    android:textColor="#1A3A6E"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/countryCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
-                <Spinner
-                    android:id="@+id/countrySpinner"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="#A1BBE6" />
-            </LinearLayout>
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="8dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:text="Choose a country dish to try today!"
+                        android:textColor="#1A3A6E"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/countrySpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="#A1BBE6"
+                        android:padding="2dp" />/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spinnerRecyclerView"
@@ -219,7 +274,7 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingLeft="10dp"
-                android:paddingTop="10dp" />
+                android:paddingTop="5dp" />
 
         </LinearLayout>
     </ScrollView>

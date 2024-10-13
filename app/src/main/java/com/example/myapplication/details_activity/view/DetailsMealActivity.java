@@ -8,7 +8,6 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,11 +69,9 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
                 if( objMeal.isIsfav()){
                     presenter.deleteMeal(objMeal);
                     favButton.setText("Add to Favorite");
-                    Toast.makeText(DetailsMealActivity.this, "This meal is deleted from favorite", Toast.LENGTH_SHORT).show();
                 }else{
                     presenter.addMeal(objMeal);
                     favButton.setText("Delete from Favorite");
-                    Toast.makeText(DetailsMealActivity.this, "This meal is added to favorite", Toast.LENGTH_SHORT).show();
                 }
         });
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
@@ -91,10 +88,8 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
                 // Convert the selected date in milliseconds to a readable format
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                 String selectedDate = sdf.format(new Date(selection));
-            Toast.makeText(this, objMeal.getStrMeal() + "is added to "+ selectedDate, Toast.LENGTH_SHORT).show();
                 //Send the meal and selected data to db
                 presenter.insertRequest(convertToWeeklyPlan(objMeal),selectedDate);
-            Toast.makeText(this, "Added to Calender db", Toast.LENGTH_SHORT).show();
             });
 
     }
@@ -109,7 +104,6 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
         Glide.with(getApplicationContext()).load(objMeal.getStrMealThumb()).apply(new RequestOptions().override(200,200))
                 .placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_foreground)
                 .into(mealPic);
-        Toast.makeText(this, objMeal.getStrMeal(), Toast.LENGTH_SHORT).show();
         titleTxt.setText(objMeal.getStrMeal());
         categoryTxt.setText(objMeal.getStrCategory());
         areaTxt.setText(objMeal.getStrArea());
@@ -157,7 +151,6 @@ public class DetailsMealActivity extends AppCompatActivity implements IViewDetai
 
     @Override
     public void onFailureResult(String msg) {
-        //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
     public static WeeklyMealPlan convertToWeeklyPlan(Meal objMeal) {
         // Create an instance of WeeklyMealPlan

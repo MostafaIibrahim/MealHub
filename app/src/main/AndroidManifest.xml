@@ -22,7 +22,7 @@
             android:name="com.example.myapplication.details_activity.view.DetailsMealActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.myapplication.home_screen.home_view.home_screen"
+            android:name="com.example.myapplication.home_screen.home_view.HomeScreen"
             android:exported="false" />
         <activity
             android:name="com.example.myapplication.splash_screen_view.MainActivity"
